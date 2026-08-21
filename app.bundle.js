@@ -3971,17 +3971,13 @@
                         var n = this.DOM.main.querySelector(".js-about_ido_coffee");
                         n && (this.obCoffee = new Ti({
                             el: n,
-                            url: "assets/glb/coffee.min.gltf",
+                            url: "assets/glb/spider_tech.gltf",
+                            scale: 0.55,
                             scroller: this.state.coffeeScroller,
                             rotation: new ii.USm(this.state.coffeeRotation.x, this.state.coffeeRotation.y, this.state.coffeeRotation.z, "XYZ")
                         }));
                         var r = this.DOM.main.querySelector(".js-about_ido_mouse");
-                        r && (this.obMouse = new Hi({
-                            el: r,
-                            url: "assets/glb/mouse.min.gltf",
-                            scroller: this.state.mouseScroller,
-                            rotation: new ii.USm(this.state.mouseRotation.x, this.state.mouseRotation.y, this.state.mouseRotation.z, "XYZ")
-                        })), vi.addObjects(this.render.bind(this))
+                        r && (this.obMouse = null), vi.addObjects(this.render.bind(this))
                     }
                     var e, i, n;
                     return e = t, (i = [{
@@ -4074,7 +4070,7 @@
                     function o(t) {
                         var e, i = t.el,
                             n = t.url,
-                            s = void 0 === n ? "assets/glb/globe.min.gltf" : n,
+                            s = void 0 === n ? "assets/glb/spider_core.gltf" : n,
                             a = t.onLoaded,
                             l = void 0 === a ? null : a;
                         return function(t, e) {

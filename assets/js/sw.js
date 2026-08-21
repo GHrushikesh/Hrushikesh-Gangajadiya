@@ -5,7 +5,7 @@ const CACHE_VERSION = "1.0.0.3",
     };
 self.addEventListener("install", (e => {
     e.waitUntil(caches.open(CURRENT_CACHES.static).then((function(e) {
-        return e.addAll(["../../vendor.bundle.js", "../../app.bundle.js", "../../app.css", "../video/hero.mp4", "../video/hero_mobile.mp4", "../mp3/audio-site.mp3", "../draco/draco_decoder.wasm", "../draco/gltf/draco_decoder.wasm", "../glb/coffee.min.gltf", "../glb/globe.min.gltf", "../glb/mouse.min.gltf"])
+        return e.addAll(["../../vendor.bundle.js", "../../app.bundle.js", "../../app.css", "../video/hero_mobile.mp4", "../mp3/audio-site.mp3", "../draco/draco_decoder.wasm", "../glb/spider_tech.gltf", "../glb/spider_core.gltf"])
     })))
 })), self.addEventListener("activate", (e => {
     const t = new Set(Object.values(CURRENT_CACHES));

@@ -42,7 +42,7 @@
     <script>
         /* <![CDATA[ */
         var siteData = {
-            "siteUrl": "https://ghrushikesh.github.io/My-Resume"
+            "siteUrl": (typeof window !== "undefined" && window.location) ? (window.location.origin + window.location.pathname.replace(/\/$/, "")) : ""
         };
         /* ]]> */
     </script>
@@ -73,6 +73,186 @@
         body::-webkit-scrollbar-thumb {
             background: #4d4d4d;
             border-radius: 5px;
+        }
+
+        /* ===================================================
+           THEME SWITCHER & LIGHT THEME (SPIDER-MAN INSPIRED)
+           =================================================== */
+        .theme_toggle {
+            position: fixed;
+            top: 1.25rem;
+            right: 1.25rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(15, 15, 20, 0.8);
+            border: 1px solid rgba(230, 0, 18, 0.5);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            outline: none;
+            z-index: 1001;
+            padding: 0;
+            box-shadow: 0 0 12px rgba(230, 0, 18, 0.25);
+        }
+
+        .theme_toggle:hover {
+            border-color: #FFD700;
+            box-shadow: 0 0 16px rgba(255, 215, 0, 0.45);
+            transform: scale(1.08);
+        }
+
+        .theme_toggle:active {
+            transform: scale(0.92);
+        }
+
+        .theme_toggle_icon {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        [data-theme="dark"] .theme_toggle_icon__dark {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+            color: #FFD700;
+        }
+
+        [data-theme="dark"] .theme_toggle_icon__light {
+            opacity: 0;
+            transform: rotate(90deg) scale(0.5);
+            pointer-events: none;
+        }
+
+        [data-theme="light"] .theme_toggle_icon__dark {
+            opacity: 0;
+            transform: rotate(-90deg) scale(0.5);
+            pointer-events: none;
+        }
+
+        [data-theme="light"] .theme_toggle_icon__light {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+            color: #D80010;
+        }
+
+        [data-theme="light"] {
+            color-scheme: light;
+        }
+
+        [data-theme="light"] body,
+        [data-theme="light"] .layer__dark {
+            background-color: #F6F6F9 !important;
+            color: #111115 !important;
+        }
+
+        [data-theme="light"] .theme_toggle {
+            background: rgba(245, 245, 250, 0.9) !important;
+            border-color: rgba(216, 0, 16, 0.45) !important;
+            color: #111115 !important;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
+        }
+
+        [data-theme="light"] .theme_toggle:hover {
+            border-color: #D80010 !important;
+            box-shadow: 0 0 16px rgba(216, 0, 16, 0.35) !important;
+        }
+
+        [data-theme="light"] .header_toggle {
+            background: rgba(245, 245, 250, 0.9) !important;
+            border-color: rgba(216, 0, 16, 0.45) !important;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
+        }
+
+        [data-theme="light"] .header_toggle_bar {
+            background-color: #111115 !important;
+        }
+
+        [data-theme="light"] .header_menu {
+            background: rgba(246, 246, 249, 0.98) !important;
+        }
+
+        [data-theme="light"] .header_menu_item a,
+        [data-theme="light"] .header_menu_item_link__deep {
+            color: #111115 !important;
+            text-shadow: none !important;
+        }
+
+        [data-theme="light"] .header_menu_item a:hover,
+        [data-theme="light"] .header_menu_item_link__deep:hover {
+            color: #D80010 !important;
+            text-shadow: 0 0 15px rgba(216, 0, 16, 0.4) !important;
+        }
+
+        [data-theme="light"] h1,
+        [data-theme="light"] h2,
+        [data-theme="light"] h3,
+        [data-theme="light"] .h1,
+        [data-theme="light"] .h2,
+        [data-theme="light"] .h3,
+        [data-theme="light"] .glitch-text,
+        [data-theme="light"] .scroll-paragraph-mask,
+        [data-theme="light"] .motto_content_heading {
+            color: #111115 !important;
+        }
+
+        [data-theme="light"] .hero_content_inner_subtitle {
+            color: #D80010 !important;
+        }
+
+        [data-theme="light"] .desc,
+        [data-theme="light"] .body-text,
+        [data-theme="light"] .about_content_label,
+        [data-theme="light"] .client_content_label {
+            color: #444448 !important;
+        }
+
+        [data-theme="light"] .certificate_item {
+            background: #FFFFFF !important;
+            border: 1px solid rgba(216, 0, 16, 0.25) !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
+        }
+
+        [data-theme="light"] .certificate_item_body {
+            color: #111115 !important;
+        }
+
+        [data-theme="light"] .certificate_item_body h4,
+        [data-theme="light"] .certificate_item_body p {
+            color: #111115 !important;
+        }
+
+        [data-theme="light"] .social-link {
+            color: #111115 !important;
+        }
+
+        [data-theme="light"] .social-link:hover {
+            color: #D80010 !important;
+        }
+
+        [data-theme="light"] .contact_box {
+            border-color: rgba(216, 0, 16, 0.3) !important;
+            background: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .glitch-text {
+                animation: none !important;
+                text-shadow: none !important;
+            }
         }
 
         /* Mask Fallback */
@@ -364,6 +544,319 @@
             transform: translateY(0) !important;
             visibility: visible !important;
         }
+
+        /* ===================================================
+           PHASE 2 RESPONSIVE ENHANCEMENTS
+           =================================================== */
+
+        /* Responsive Hero Typography */
+        h1.glitch-text {
+            font-size: clamp(2.4rem, 9.5vw, 6.5rem) !important;
+            line-height: 0.95 !important;
+            word-break: normal;
+        }
+
+        .hero_content_inner_subtitle {
+            font-size: clamp(0.9rem, 3.5vw, 1.25rem) !important;
+            letter-spacing: 2px !important;
+        }
+
+        .motto_content_heading {
+            font-size: clamp(2.5rem, 11vw, 6rem) !important;
+            line-height: 0.95 !important;
+        }
+
+        /* Mobile Header Toggle */
+        .header_toggle {
+            display: none;
+            position: fixed;
+            top: 1.25rem;
+            right: 1.25rem;
+            width: 44px;
+            height: 44px;
+            background: rgba(15, 15, 15, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(230, 0, 18, 0.5);
+            border-radius: 50%;
+            z-index: 1000;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            padding: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px rgba(230, 0, 18, 0.2);
+        }
+
+        .header_toggle:hover,
+        .header_toggle:active {
+            border-color: #FFD700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .header_toggle_bar {
+            width: 18px;
+            height: 2px;
+            background-color: #FFFFFF;
+            border-radius: 2px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header_toggle.is-active .header_toggle_bar:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+            background-color: #E60012;
+        }
+
+        .header_toggle.is-active .header_toggle_bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .header_toggle.is-active .header_toggle_bar:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
+            background-color: #E60012;
+        }
+
+        /* Responsive Certificates */
+        .certificates_scroll_container {
+            display: flex;
+            overflow-x: auto;
+            gap: 24px;
+            padding-bottom: 20px;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .certificates_scroll_container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .certificate_item {
+            flex: 0 0 450px;
+            width: 450px;
+            background: #111;
+            border-radius: 12px;
+            border: 1px solid #222;
+            overflow: hidden;
+            scroll-snap-align: start;
+            box-sizing: border-box;
+            vertical-align: top;
+            display: inline-block;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .certificate_item img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-bottom: 1px solid #222;
+            display: block;
+        }
+
+        .certificate_item_body {
+            padding: 20px;
+            color: #fff;
+        }
+
+        /* ===================================================
+           SPIDER-MAN INTERACTIVE 3D ARTWORK (PHASE 6)
+           =================================================== */
+        .about_ido_coffee {
+            position: absolute;
+            left: -3rem;
+            bottom: -2rem;
+            width: 320px;
+            height: 320px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .client_list_3d {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 480px;
+            height: 480px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .client_list_3d_inner,
+        .about_ido_inner {
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 767.98px) {
+            .header {
+                mix-blend-mode: normal !important;
+            }
+
+            .theme_toggle {
+                top: 1.25rem;
+                right: 4.75rem;
+                width: 44px;
+                height: 44px;
+            }
+
+            .header_toggle {
+                display: flex;
+            }
+
+            .header_menu {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                bottom: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                height: 100dvh !important;
+                background: rgba(5, 5, 5, 0.97) !important;
+                backdrop-filter: blur(24px) !important;
+                -webkit-backdrop-filter: blur(24px) !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transition: opacity 0.35s ease, visibility 0.35s ease;
+                z-index: 999 !important;
+            }
+
+            .header_menu.is-open {
+                opacity: 1 !important;
+                visibility: visible !important;
+                pointer-events: auto !important;
+            }
+
+            .header_menu_list {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 2.25rem !important;
+                text-align: center !important;
+            }
+
+            .header_menu_item_inner {
+                clip-path: none !important;
+                -webkit-clip-path: none !important;
+            }
+
+            .header_menu_item_link__active {
+                display: none !important;
+            }
+
+            .header_menu_item a,
+            .header_menu_item_link__deep {
+                font-family: 'Bebas Neue', sans-serif !important;
+                font-size: 2.5rem !important;
+                letter-spacing: 2px !important;
+                padding: 0.5rem 1rem !important;
+                color: #FFFFFF !important;
+                text-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+                transition: color 0.3s ease, text-shadow 0.3s ease !important;
+                display: block;
+            }
+
+            .header_menu_item a:active,
+            .header_menu_item a:hover,
+            .header_menu_item_link__deep:active,
+            .header_menu_item_link__deep:hover {
+                color: #FFD700 !important;
+                text-shadow: 0 0 18px #FFD700, 0 0 30px rgba(255, 215, 0, 0.6) !important;
+            }
+
+            .certificates_scroll_container {
+                gap: 16px;
+            }
+
+            .certificate_item {
+                flex: 0 0 calc(100vw - 48px);
+                width: calc(100vw - 48px);
+                max-width: 380px;
+                min-width: 270px;
+            }
+
+            .certificate_item img {
+                height: 200px;
+            }
+
+            .certificate_item_body {
+                padding: 16px;
+            }
+
+            .about {
+                --size-canvas: 14rem !important;
+            }
+
+            .about_me {
+                margin-bottom: 4rem !important;
+                padding-top: 4rem !important;
+            }
+
+            .about_ido {
+                padding-bottom: 4rem !important;
+            }
+
+            .heading-mask_el .h1 {
+                font-size: clamp(1.8rem, 7vw, 3rem) !important;
+                line-height: 1.1 !important;
+            }
+
+            .heading-mask_el .desc {
+                font-size: 0.9rem !important;
+            }
+
+            .motto {
+                padding: 4rem 0 !important;
+            }
+
+            .about_ido_coffee {
+                left: -1rem;
+                bottom: 0;
+                width: 160px;
+                height: 160px;
+                opacity: 0.7;
+            }
+
+            .client_list_3d {
+                width: 260px;
+                height: 260px;
+                opacity: 0.6;
+            }
+
+            .contact {
+                padding-bottom: 4rem !important;
+            }
+
+            .social-link {
+                margin-bottom: 1.5rem !important;
+            }
+        }
+
+        /* Touch Devices Adaptation */
+        @media (hover: none) and (pointer: coarse) {
+            .vj-cursor,
+            .js-vj-cursor {
+                display: none !important;
+            }
+
+            * {
+                cursor: auto !important;
+            }
+
+            .layer__red {
+                display: none !important;
+            }
+        }
     </style>
     <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-79VFDFP12E"></script>
     <script>
@@ -376,6 +869,15 @@
 
         gtag('config', 'G-79VFDFP12E');
     </script> -->
+    <script>
+        (function() {
+            try {
+                var saved = localStorage.getItem('portfolio_theme');
+                var theme = saved || 'dark';
+                document.documentElement.setAttribute('data-theme', theme);
+            } catch(e) {}
+        })();
+    </script>
     <script defer="defer" src="vendor.bundle.js?v=miles_v3_final"></script>
     <script defer="defer" src="app.bundle.js?v=miles_v3_final"></script>
     <link href="app.css?v=miles_v3_final" rel="stylesheet">
@@ -396,10 +898,23 @@
         </div>
     </div>
     <header class="header js-header">
-        <div class="header_logo js-header_logo"><a class="link-logo" aria-label="Home page" href="/"><img
+        <div class="header_logo js-header_logo"><a class="link-logo" aria-label="Home page" href="#about"><img
                     src="assets/icons/profile.jpeg" alt="logo"
                     style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;"></a></div>
-        <div class="header_menu">
+        <button class="theme_toggle" id="js-theme_toggle" aria-label="Toggle visual theme" title="Toggle Light / Dark theme">
+            <span class="theme_toggle_icon theme_toggle_icon__dark">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </span>
+            <span class="theme_toggle_icon theme_toggle_icon__light">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </span>
+        </button>
+        <button class="header_toggle" id="js-header_toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span class="header_toggle_bar"></span>
+            <span class="header_toggle_bar"></span>
+            <span class="header_toggle_bar"></span>
+        </button>
+        <div class="header_menu" id="js-header_menu">
             <ul class="header_menu_list ul__reset">
                 <li class="header_menu_item js-cursor-contract"><a href="#about" class="desc text-uppercase"><span
                             class="header_menu_item_inner"><span
@@ -425,7 +940,7 @@
                     <div class="hero">
                         <div class="hero_bg" data-lenis-parallax=".5">
                             <div class="w-100 h-100 js-anim--scale" data-screen-offset="0.3"><video id="hero-bg-video"
-                                    autoplay muted playsinline loop preload="none" data-pc="assets/video/hero.mp4"
+                                    autoplay muted playsinline loop preload="none" data-pc=""
                                     data-mobile="assets/video/hero_mobile.mp4"></video></div>
                         </div>
                         <div class="hero_content">
@@ -458,9 +973,6 @@
                         <div class="about_ido">
                             <div class="js-about_ido_coffee about_ido_coffee">
                                 <div class="js-about_ido_inner about_ido_inner" data-lenis-speed="-.1"></div>
-                            </div>
-                            <div class="js-about_ido_mouse about_ido_mouse">
-                                <div class="js-about_ido_inner about_ido_inner" data-lenis-speed=".1"></div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-8 col-sm-10 offset-lg-2 offset-sm-1 col-12">
@@ -633,7 +1145,7 @@
                     </div>
                 </div>
                 <div id="work">
-                    <div class="work" id="work">
+                    <div class="work">
                         <div class="row work_experience">
                             <div class="work_bg" data-lenis-speed=".5">
                                 <picture class="image__object-fit d-lg-block d-none" style="filter: brightness(0.3);">
@@ -724,8 +1236,6 @@
                         <div class="client_list">
                             <div class="client_list_3d" data-lenis-speed=".1">
                                 <div class="js-client_list_3d client_list_3d_inner"></div>
-                                <div class="client_list_3d_image"><img src="assets/images/planet-1-1.png" alt="planet">
-                                </div>
                             </div>
                             <div class="client_list_inner">
                                 <div class="heading-mask js-heading-mask reveal-on-scroll">
@@ -813,7 +1323,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="certificates" class="testimonials js-testimonials reveal-on-scroll"
+                    <div id="certificates" class="testimonials reveal-on-scroll"
                         style="padding: 100px 0;">
                         <div class="row">
                             <div class="col-lg-8 col-sm-10 col-12 offset-lg-2 offset-sm-1">
@@ -833,44 +1343,35 @@
                                             onmouseout="this.style.background='transparent'; this.style.color='#fff';">&#8594;</button>
                                     </div>
                                 </div>
-                                <div class="certificates_scroll_container js-no-mask-section"
-                                    style="overflow-x: auto; white-space: nowrap; padding-bottom: 20px; -ms-overflow-style: none; scrollbar-width: none; scroll-snap-type: x mandatory;">
+                                <div class="certificates_scroll_container js-no-mask-section">
                                     <!-- CCNA: Switching, Routing, and Wireless Essentials -->
-                                    <div class="certificate_item"
-                                        style="display: inline-block; width: 450px; background: #111; margin-right: 30px; border-radius: 12px; border: 1px solid #222; overflow: hidden; vertical-align: top; scroll-snap-align: start;">
-                                        <img src="assets/certificate/ccna_switching.png"
-                                            style="width: 100%; height: 280px; object-fit: cover; border-bottom: 1px solid #222;">
-                                        <div style="padding: 20px; color: #fff;">
+                                    <div class="certificate_item">
+                                        <img src="assets/certificate/ccna_switching.png" alt="CCNA: Switching, Routing, and Wireless Essentials">
+                                        <div class="certificate_item_body">
                                             <h3 class="h6 mb-1">CCNA: Switching, Routing, and Wireless Essentials</h3>
                                             <p class="desc op-05 small">Cisco Networking Academy</p>
                                         </div>
                                     </div>
                                     <!-- Linux Essentials -->
-                                    <div class="certificate_item"
-                                        style="display: inline-block; width: 450px; background: #111; margin-right: 30px; border-radius: 12px; border: 1px solid #222; overflow: hidden; vertical-align: top; scroll-snap-align: start;">
-                                        <img src="assets/certificate/linux_essentials.png"
-                                            style="width: 100%; height: 280px; object-fit: cover; border-bottom: 1px solid #222;">
-                                        <div style="padding: 20px; color: #fff;">
+                                    <div class="certificate_item">
+                                        <img src="assets/certificate/linux_essentials.png" alt="Linux Essentials">
+                                        <div class="certificate_item_body">
                                             <h3 class="h6 mb-1">Linux Essentials</h3>
                                             <p class="desc op-05 small">Cisco Networking Academy (NDG)</p>
                                         </div>
                                     </div>
                                     <!-- CCNA: Introduction to Networks -->
-                                    <div class="certificate_item"
-                                        style="display: inline-block; width: 450px; background: #111; margin-right: 30px; border-radius: 12px; border: 1px solid #222; overflow: hidden; vertical-align: top; scroll-snap-align: start;">
-                                        <img src="assets/certificate/ccna_intro.png"
-                                            style="width: 100%; height: 280px; object-fit: cover; border-bottom: 1px solid #222;">
-                                        <div style="padding: 20px; color: #fff;">
+                                    <div class="certificate_item">
+                                        <img src="assets/certificate/ccna_intro.png" alt="CCNA: Introduction to Networks">
+                                        <div class="certificate_item_body">
                                             <h3 class="h6 mb-1">CCNA: Introduction to Networks</h3>
                                             <p class="desc op-05 small">Cisco Networking Academy</p>
                                         </div>
                                     </div>
                                     <!-- Problem Solving for Success -->
-                                    <div class="certificate_item"
-                                        style="display: inline-block; width: 450px; background: #111; margin-right: 30px; border-radius: 12px; border: 1px solid #222; overflow: hidden; vertical-align: top; scroll-snap-align: start;">
-                                        <img src="assets/certificate/infosys_problem_solving.png"
-                                            style="width: 100%; height: 280px; object-fit: cover; border-bottom: 1px solid #222;">
-                                        <div style="padding: 20px; color: #fff;">
+                                    <div class="certificate_item">
+                                        <img src="assets/certificate/infosys_problem_solving.png" alt="Problem Solving for Success">
+                                        <div class="certificate_item_body">
                                             <h3 class="h6 mb-1">Problem Solving for Success</h3>
                                             <p class="desc op-05 small">Infosys Springboard</p>
                                         </div>
@@ -907,7 +1408,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="contact" class="contact container_content">
+                    <div class="contact container_content">
                         <div class="row">
                             <div class="col-lg-8 col-sm-10 col-12 offset-lg-2 offset-sm-1">
                                 <p class="contact_label body-text text-uppercase">Connect</p>
@@ -1000,11 +1501,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="about_ido op-0">
+                    <div class="about_ido">
                         <div class="row">
                             <div class="col-lg-8 col-sm-10 col-12 offset-lg-2 offset-sm-1">
-                                <p class="about_content_label container_content body-text text-uppercase text-dark">What
-                                    i do</p>
+                                <p class="about_content_label container_content body-text text-uppercase text-dark">Focus
+                                    Areas</p>
                             </div>
                         </div>
                         <div class="heading-mask">
@@ -1012,53 +1513,25 @@
                                 <div class="row align-items-center">
                                     <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
                                         <div class="simple-masking overflow-hidden">
-                                            <h2 class="h1 mb-0 text-dark">3D</h2>
+                                            <h2 class="h1 mb-0 text-dark">Artificial Intelligence</h2>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
-                                        <p class="mb-0 desc text-dark">I can produce anything that my 16”<br />laptop
-                                            can render</p>
+                                        <p class="mb-0 desc text-dark">Building smart systems and neural networks for
+                                            real-world impact.</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="heading-mask_el heading-mask_el__masking container_content container_content">
+                            <div class="heading-mask_el heading-mask_el__masking container_content">
                                 <div class="row align-items-center">
                                     <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
                                         <div class="simple-masking overflow-hidden">
-                                            <h2 class="h1 mb-0 text-dark">3D</h2>
+                                            <h2 class="h1 mb-0 text-dark">Artificial Intelligence</h2>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
-                                        <p class="mb-0 desc">I can produce anything that my 16”<br />laptop can render
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="heading-mask">
-                            <div class="heading-mask_el heading-mask_el__deep container_content">
-                                <div class="row align-items-center">
-                                    <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
-                                        <div class="simple-masking overflow-hidden">
-                                            <h2 class="h1 mb-0 text-dark">Visual</h2>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
-                                        <p class="mb-0 desc text-dark">I search the internet for visual references and
-                                            then combine them to create my own work.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="heading-mask_el heading-mask_el__masking container_content container_content">
-                                <div class="row align-items-center">
-                                    <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
-                                        <div class="simple-masking overflow-hidden">
-                                            <h2 class="h1 mb-0 text-dark">Visual</h2>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
-                                        <p class="mb-0 desc">I search the internet for visual references and then
-                                            combine them to create my own work.</p>
+                                        <p class="mb-0 desc">Building smart systems and neural networks for
+                                            real-world impact.</p>
                                     </div>
                                 </div>
                             </div>
@@ -1068,53 +1541,25 @@
                                 <div class="row align-items-center">
                                     <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
                                         <div class="simple-masking overflow-hidden">
-                                            <h2 class="h1 mb-0 text-dark">Motion</h2>
+                                            <h2 class="h1 mb-0 text-dark">Web Development</h2>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
-                                        <p class="mb-0 desc text-dark">I use fancy motion that makes my design more
-                                            interesting that it actually is</p>
+                                        <p class="mb-0 desc text-dark">Creating responsive and interactive web applications
+                                            using modern stacks.</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="heading-mask_el heading-mask_el__masking container_content container_content">
+                            <div class="heading-mask_el heading-mask_el__masking container_content">
                                 <div class="row align-items-center">
                                     <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
                                         <div class="simple-masking overflow-hidden">
-                                            <h2 class="h1 mb-0 text-dark">Motion</h2>
+                                            <h2 class="h1 mb-0 text-dark">Web Development</h2>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
-                                        <p class="mb-0 desc">I use fancy motion that makes my design more interesting
-                                            that it actually is</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="heading-mask">
-                            <div class="heading-mask_el heading-mask_el__deep container_content">
-                                <div class="row align-items-center">
-                                    <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
-                                        <div class="simple-masking overflow-hidden">
-                                            <h2 class="h1 mb-0 text-dark">Product</h2>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
-                                        <p class="mb-0 desc text-dark">I utilize common design best practices, test, and
-                                            re-iterate until it works (hopefully).</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="heading-mask_el heading-mask_el__masking container_content container_content">
-                                <div class="row align-items-center">
-                                    <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
-                                        <div class="simple-masking overflow-hidden">
-                                            <h2 class="h1 mb-0 text-dark">Product</h2>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
-                                        <p class="mb-0 desc">I utilize common design best practices, test, and
-                                            re-iterate until it works (hopefully).</p>
+                                        <p class="mb-0 desc">Creating responsive and interactive web applications
+                                            using modern stacks.</p>
                                     </div>
                                 </div>
                             </div>
@@ -1124,25 +1569,81 @@
                                 <div class="row align-items-center">
                                     <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
                                         <div class="simple-masking overflow-hidden">
-                                            <h2 class="h1 mb-0 text-dark">Tutorial</h2>
+                                            <h2 class="h1 mb-0 text-dark">Python Programming</h2>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
-                                        <p class="mb-0 desc text-dark">I thought I’d make millions of $ from
-                                            Youtube<br />but I didn’t</p>
+                                        <p class="mb-0 desc text-dark">Writing clean, efficient, and scalable code for diverse
+                                            software solutions.</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="heading-mask_el heading-mask_el__masking container_content container_content">
+                            <div class="heading-mask_el heading-mask_el__masking container_content">
                                 <div class="row align-items-center">
                                     <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
                                         <div class="simple-masking overflow-hidden">
-                                            <h2 class="h1 mb-0 text-dark">Tutorial</h2>
+                                            <h2 class="h1 mb-0 text-dark">Python Programming</h2>
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
-                                        <p class="mb-0 desc">I thought I’d make millions of $ from Youtube<br />but I
-                                            didn’t</p>
+                                        <p class="mb-0 desc">Writing clean, efficient, and scalable code for diverse
+                                            software solutions.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="heading-mask">
+                            <div class="heading-mask_el heading-mask_el__deep container_content">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
+                                        <div class="simple-masking overflow-hidden">
+                                            <h2 class="h1 mb-0 text-dark">DSA</h2>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
+                                        <p class="mb-0 desc text-dark">Optimizing algorithms and data structures for maximum
+                                            performance.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="heading-mask_el heading-mask_el__masking container_content">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
+                                        <div class="simple-masking overflow-hidden">
+                                            <h2 class="h1 mb-0 text-dark">DSA</h2>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
+                                        <p class="mb-0 desc">Optimizing algorithms and data structures for maximum
+                                            performance.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="heading-mask">
+                            <div class="heading-mask_el heading-mask_el__deep container_content">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
+                                        <div class="simple-masking overflow-hidden">
+                                            <h2 class="h1 mb-0 text-dark">Problem Solving</h2>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
+                                        <p class="mb-0 desc text-dark">Cracking complex logical challenges with efficient and
+                                            elegant solutions.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="heading-mask_el heading-mask_el__masking container_content">
+                                <div class="row align-items-center">
+                                    <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
+                                        <div class="simple-masking overflow-hidden">
+                                            <h2 class="h1 mb-0 text-dark">Problem Solving</h2>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
+                                        <p class="mb-0 desc">Cracking complex logical challenges with efficient and
+                                            elegant solutions.</p>
                                     </div>
                                 </div>
                             </div>
@@ -1160,7 +1661,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="work_history op-0">
+                    <div class="work_history">
                         <div class="row work_heading work_history_heading">
                             <div class="col-lg-8 col-sm-10 offset-lg-2 offset-sm-1 col-12">
                                 <p class="work_content_label body-text text-uppercase container_content mb-0 text-dark">
@@ -1201,90 +1702,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="heading-mask">
-                            <div class="heading-mask_el container_content heading-mask_el__deep">
-                                <div class="row">
-                                    <div class="col-sm-2 offset-lg-2 offset-sm-1 col-3">
-                                        <div class="simple-masking">
-                                            <div class="simple-masking_el"><span class="h3 mb-1 text-dark">2023</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-sm-8 col-9">
-                                        <div class="simple-masking_el">
-                                            <p class="h3 mb-1 text-dark">AI Explorer</p>
-                                            <p class="mb-0 desc font-400 text-dark">JARVIS Assistant</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="heading-mask_el container_content heading-mask_el__masking">
-                                <div class="row">
-                                    <div class="col-sm-2 offset-lg-2 offset-sm-1 col-3">
-                                        <div class="simple-masking">
-                                            <div class="simple-masking_el"><span class="h3 mb-1 text-dark">2023</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-sm-8 col-9">
-                                        <div class="simple-masking_el">
-                                            <p class="h3 mb-1 text-dark">AI Explorer</p>
-                                            <p class="mb-0 desc font-400 text-dark">JARVIS Assistant</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="heading-mask">
-                            <div class="heading-mask_el container_content heading-mask_el__deep">
-                                <div class="row">
-                                    <div class="col-sm-2 offset-lg-2 offset-sm-1 col-3">
-                                        <div class="simple-masking">
-                                            <div class="simple-masking_el"><span class="h3 mb-1 text-dark">2021</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-sm-8 col-9">
-                                        <div class="simple-masking_el">
-                                            <p class="h3 mb-1 text-dark">B.Tech CSE</p>
-                                            <p class="mb-0 desc font-400 text-dark">Student</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="heading-mask_el container_content heading-mask_el__masking">
-                                <div class="row">
-                                    <div class="col-sm-2 offset-lg-2 offset-sm-1 col-3">
-                                        <div class="simple-masking">
-                                            <div class="simple-masking_el"><span class="h3 mb-1 text-dark">2021</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-sm-8 col-9">
-                                        <div class="simple-masking_el">
-                                            <p class="h3 mb-1 text-dark">B.Tech CSE</p>
-                                            <p class="mb-0 desc font-400 text-dark">Student</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
                 <div class="client client__red">
                     <div class="row client_info">
                         <div class="col-lg-9 col-sm-10 offset-lg-2 offset-sm-1 col-12">
                             <div class="client_content container_content text-dark">
-                                <p class="client_content_label body-text text-uppercase">Clients</p>
+                                <p class="client_content_label body-text text-uppercase">Projects</p>
                                 <div class="client_content_desc h2">
-                                    <div class="scroll-paragraph-mask">I was only a small part of a large team. They
-                                        probably have no idea I exist.</div>
+                                    <div class="scroll-paragraph-mask">Turning ideas into projects.</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="client_list op-0 text-dark">
+                    <div class="client_list text-dark">
                         <div class="client_list_inner">
                             <div class="heading-mask">
                                 <div class="heading-mask_el heading-mask_el__deep container_content">
@@ -1345,7 +1776,7 @@
                             <div class="dots container_content"><span></span> <span></span> <span></span></div>
                         </div>
                     </div>
-                    <div id="certificates_red" class="testimonials testimonials__red js-testimonials__red"
+                    <div id="certificates_red" class="testimonials testimonials__red"
                         style="padding: 100px 0;">
                         <div class="row">
                             <div class="col-lg-8 col-sm-10 col-12 offset-lg-2 offset-sm-1">
@@ -1364,44 +1795,35 @@
                                             onmouseout="this.style.background='transparent'; this.style.color='#222';">&#8594;</button>
                                     </div>
                                 </div>
-                                <div class="certificates_scroll_container js-no-mask-section"
-                                    style="overflow-x: auto; white-space: nowrap; padding-bottom: 20px; -ms-overflow-style: none; scrollbar-width: none; scroll-snap-type: x mandatory;">
+                                <div class="certificates_scroll_container js-no-mask-section">
                                     <!-- CCNA: Switching, Routing, and Wireless Essentials -->
-                                    <div class="certificate_item"
-                                        style="display: inline-block; width: 450px; background: #111; margin-right: 30px; border-radius: 12px; border: 1px solid #222; overflow: hidden; vertical-align: top; scroll-snap-align: start;">
-                                        <img src="assets/certificate/ccna_switching.png"
-                                            style="width: 100%; height: 280px; object-fit: cover; border-bottom: 1px solid #222;">
-                                        <div style="padding: 20px; color: #fff;">
+                                    <div class="certificate_item">
+                                        <img src="assets/certificate/ccna_switching.png" alt="CCNA: Switching, Routing, and Wireless Essentials">
+                                        <div class="certificate_item_body">
                                             <h3 class="h6 mb-1">CCNA: Switching, Routing, and Wireless Essentials</h3>
                                             <p class="desc op-05 small">Cisco Networking Academy</p>
                                         </div>
                                     </div>
                                     <!-- Linux Essentials -->
-                                    <div class="certificate_item"
-                                        style="display: inline-block; width: 450px; background: #111; margin-right: 30px; border-radius: 12px; border: 1px solid #222; overflow: hidden; vertical-align: top; scroll-snap-align: start;">
-                                        <img src="assets/certificate/linux_essentials.png"
-                                            style="width: 100%; height: 280px; object-fit: cover; border-bottom: 1px solid #222;">
-                                        <div style="padding: 20px; color: #fff;">
+                                    <div class="certificate_item">
+                                        <img src="assets/certificate/linux_essentials.png" alt="Linux Essentials">
+                                        <div class="certificate_item_body">
                                             <h3 class="h6 mb-1">Linux Essentials</h3>
                                             <p class="desc op-05 small">Cisco Networking Academy (NDG)</p>
                                         </div>
                                     </div>
                                     <!-- CCNA: Introduction to Networks -->
-                                    <div class="certificate_item"
-                                        style="display: inline-block; width: 450px; background: #111; margin-right: 30px; border-radius: 12px; border: 1px solid #222; overflow: hidden; vertical-align: top; scroll-snap-align: start;">
-                                        <img src="assets/certificate/ccna_intro.png"
-                                            style="width: 100%; height: 280px; object-fit: cover; border-bottom: 1px solid #222;">
-                                        <div style="padding: 20px; color: #fff;">
+                                    <div class="certificate_item">
+                                        <img src="assets/certificate/ccna_intro.png" alt="CCNA: Introduction to Networks">
+                                        <div class="certificate_item_body">
                                             <h3 class="h6 mb-1">CCNA: Introduction to Networks</h3>
                                             <p class="desc op-05 small">Cisco Networking Academy</p>
                                         </div>
                                     </div>
                                     <!-- Problem Solving for Success -->
-                                    <div class="certificate_item"
-                                        style="display: inline-block; width: 450px; background: #111; margin-right: 30px; border-radius: 12px; border: 1px solid #222; overflow: hidden; vertical-align: top; scroll-snap-align: start;">
-                                        <img src="assets/certificate/infosys_problem_solving.png"
-                                            style="width: 100%; height: 280px; object-fit: cover; border-bottom: 1px solid #222;">
-                                        <div style="padding: 20px; color: #fff;">
+                                    <div class="certificate_item">
+                                        <img src="assets/certificate/infosys_problem_solving.png" alt="Problem Solving for Success">
+                                        <div class="certificate_item_body">
                                             <h3 class="h6 mb-1">Problem Solving for Success</h3>
                                             <p class="desc op-05 small">Infosys Springboard</p>
                                         </div>
@@ -1425,91 +1847,46 @@
             </li>
         </ul>
     </footer>
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-    <!-- <script defer
-        src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516"
-        integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg=="
-        data-cf-beacon='{"version":"2024.11.0","token":"b0c83e2157de4bb5aa145f2cd497be56","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'
-        crossorigin="anonymous"></script> -->
+    <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script>
-        // Preloader & Scroll Rescue Fail-safe
+        // Preloader & Scroll Unlock Management
         let hasUnlockedScroll = false;
         function unlockScroll() {
             if (hasUnlockedScroll) return;
             hasUnlockedScroll = true;
-            console.log('Unlocking scroll...');
             const preloader = document.querySelector('.js-page-loading');
             if (preloader) {
-                preloader.style.transition = 'opacity 1s ease';
+                preloader.style.transition = 'opacity 0.8s ease';
                 preloader.style.opacity = '0';
                 setTimeout(() => {
                     preloader.style.display = 'none';
-                }, 1000);
+                }, 800);
             }
 
-            // Force classes and styles to unlock native scroll
+            // Remove stop classes to ensure document and Lenis scroll freely
             document.documentElement.classList.remove('lenis-stopped');
             document.body.classList.add('is-loaded', 'is-enter', 'is-ready');
 
-            const forceStyles = {
-                'overflow': 'auto',
-                'height': 'auto',
-                'position': 'static',
-                'touch-action': 'auto',
-                '-ms-touch-action': 'auto'
-            };
-
-            for (let prop in forceStyles) {
-                document.body.style.setProperty(prop, forceStyles[prop], 'important');
-                document.documentElement.style.setProperty(prop, forceStyles[prop], 'important');
-            }
-
-            // Force Wheel Scroll Rescue (Directly scroll the window)
-            window.addEventListener('wheel', function (e) {
-                // Manually scroll based on delta
-                window.scrollBy(0, e.deltaY);
-                // Stop the library from seeing this and blocking it
-                e.stopPropagation();
-            }, { capture: true, passive: true });
-
-            window.addEventListener('touchmove', function (e) {
-                // For touch, we let it propagate unless it's stuck
-                if (document.documentElement.classList.contains('lenis-stopped')) {
-                    e.stopPropagation();
-                }
-            }, { capture: true, passive: true });
-
-            // Also force-remove 'lenis-stopped' from html just in case
-            setInterval(() => {
-                if (document.documentElement.classList.contains('lenis-stopped')) {
-                    document.documentElement.classList.remove('lenis-stopped');
-                }
-            }, 1000);
-
-            // Dispatch resize to fix layout
+            // Dispatch resize to align GSAP triggers and 3D scenes
             window.dispatchEvent(new Event('resize'));
 
-            // Mask Effect Rescue
+            // Mask Effect (Mouse/Pointer only)
+            const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
             const redLayer = document.querySelector('.layer__red');
-            if (redLayer) {
-                console.log('Mask rescue active.');
+            if (!isTouchDevice && redLayer) {
                 document.addEventListener('mousemove', function (e) {
-                    // Use pageX/pageY so it follows the mouse relative to the entire page
                     document.documentElement.style.setProperty('--x', e.pageX + 'px');
                     document.documentElement.style.setProperty('--y', e.pageY + 'px');
 
-                    // Check if we are over a "no mask" section and force size to 0
                     const target = document.elementFromPoint(e.clientX, e.clientY);
                     if (target && target.closest('.js-no-mask-section')) {
                         document.documentElement.style.setProperty('--size', '0px');
                     }
                 });
 
-                // Handle mask size on hover
                 const maskTargets = document.querySelectorAll('.js-heading-mask, .js-cursor-extend, .js-cursor-contract, a, button');
                 maskTargets.forEach(target => {
                     target.addEventListener('mouseenter', () => {
-                        // If it's inside a "no mask" section, don't show the orange circle
                         if (target.closest('.js-no-mask-section')) {
                             document.documentElement.style.setProperty('--size', '0px');
                         } else {
@@ -1520,20 +1897,12 @@
                         document.documentElement.style.setProperty('--size', '0px');
                     });
                 });
-
-                // Set a default size if we want it always visible
-                // document.documentElement.style.setProperty('--size', '200px');
             }
-
-            console.log('Scroll & Mask rescued.');
         }
 
-        // Run rescue multiple times to ensure it sticks
+        // Automatic unlock fallback
         setTimeout(unlockScroll, 2000);
-        setTimeout(unlockScroll, 5000);
-
-        // Also unlock on click
-        document.addEventListener('mousedown', unlockScroll);
+        document.addEventListener('mousedown', unlockScroll, { once: true });
 
         // Certificates Slider Logic
         const certContainers = document.querySelectorAll('.certificates_scroll_container');
@@ -1542,46 +1911,63 @@
         const btnPrevRed = document.querySelector('.cert-btn-prev-red');
         const btnNextRed = document.querySelector('.cert-btn-next-red');
 
-        const scrollAmount = 480; // item width (450) + margin (30)
+        function getCertScrollStep(container) {
+            const item = container ? container.querySelector('.certificate_item') : null;
+            return item ? (item.offsetWidth + 20) : 320;
+        }
 
-        if (certContainers.length >= 2) {
-            // Main layer
+        if (certContainers.length >= 1) {
             if (btnPrev && btnNext) {
                 btnPrev.addEventListener('click', () => {
-                    certContainers[0].scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                    certContainers[0].scrollBy({ left: -getCertScrollStep(certContainers[0]), behavior: 'smooth' });
                 });
                 btnNext.addEventListener('click', () => {
-                    certContainers[0].scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    certContainers[0].scrollBy({ left: getCertScrollStep(certContainers[0]), behavior: 'smooth' });
                 });
             }
-            // Red layer
-            if (btnPrevRed && btnNextRed) {
+            if (certContainers.length >= 2 && btnPrevRed && btnNextRed) {
                 btnPrevRed.addEventListener('click', () => {
-                    certContainers[1].scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                    certContainers[1].scrollBy({ left: -getCertScrollStep(certContainers[1]), behavior: 'smooth' });
                 });
                 btnNextRed.addEventListener('click', () => {
-                    certContainers[1].scrollBy({ left: scrollAmount, behavior: 'smooth' });
-                });
-            }
-        } else if (certContainers.length === 1) {
-            if (btnPrev && btnNext) {
-                btnPrev.addEventListener('click', () => {
-                    certContainers[0].scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-                });
-                btnNext.addEventListener('click', () => {
-                    certContainers[0].scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    certContainers[1].scrollBy({ left: getCertScrollStep(certContainers[1]), behavior: 'smooth' });
                 });
             }
         }
 
-        // Navigation Bar Fix
-        const navLinks = document.querySelectorAll('.header_menu_item a');
+        // Mobile Menu Toggle & Navigation Links
+        const headerToggle = document.getElementById('js-header_toggle');
+        const headerMenu = document.getElementById('js-header_menu');
+
+        if (headerToggle && headerMenu) {
+            headerToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isOpen = headerMenu.classList.toggle('is-open');
+                headerToggle.classList.toggle('is-active', isOpen);
+                headerToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!headerMenu.contains(e.target) && !headerToggle.contains(e.target) && headerMenu.classList.contains('is-open')) {
+                    headerMenu.classList.remove('is-open');
+                    headerToggle.classList.remove('is-active');
+                    headerToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+
+        const navLinks = document.querySelectorAll('.header_menu_item a, .link-logo');
         navLinks.forEach(link => {
             link.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href');
                 if (targetId && targetId.startsWith('#')) {
                     e.preventDefault();
                     e.stopPropagation();
+                    if (headerMenu && headerToggle) {
+                        headerMenu.classList.remove('is-open');
+                        headerToggle.classList.remove('is-active');
+                        headerToggle.setAttribute('aria-expanded', 'false');
+                    }
                     const targetSection = document.querySelector(targetId);
                     if (targetSection) {
                         targetSection.scrollIntoView({ behavior: 'smooth' });
@@ -1631,7 +2017,8 @@
 
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            ctx.strokeStyle = isLight ? 'rgba(216, 0, 16, 0.16)' : 'rgba(230, 0, 18, 0.22)';
             ctx.lineWidth = 0.5;
 
             particles.forEach((p, i) => {
@@ -1640,15 +2027,26 @@
                 if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
                 if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
+                if (mouse.x !== null) {
+                    const dx = p.x - mouse.x;
+                    const dy = p.y - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 100) {
+                        const force = (100 - dist) / 100;
+                        p.x += (dx / dist) * force * 1.2;
+                        p.y += (dy / dist) * force * 1.2;
+                    }
+                }
+
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+                ctx.fillStyle = isLight ? 'rgba(216, 0, 16, 0.35)' : 'rgba(255, 255, 255, 0.35)';
                 ctx.fill();
 
                 for (let j = i + 1; j < particles.length; j++) {
                     const p2 = particles[j];
                     const dist = Math.sqrt((p.x - p2.x) ** 2 + (p.y - p2.y) ** 2);
-                    if (dist < 150) {
+                    if (dist < 140) {
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
@@ -1667,6 +2065,19 @@
         initParticles();
         animateParticles();
         window.addEventListener('resize', initParticles);
+
+        // 3. Theme Toggle Interaction
+        const themeBtn = document.getElementById('js-theme_toggle');
+        if (themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                try {
+                    localStorage.setItem('portfolio_theme', newTheme);
+                } catch(e) {}
+            });
+        }
     </script>
 </body>
 

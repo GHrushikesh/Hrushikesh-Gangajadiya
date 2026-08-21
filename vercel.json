@@ -1,0 +1,22 @@
+{
+  "headers": [
+    {
+      "source": "/assets/draco/(.*)\\.wasm",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/wasm"
+        }
+      ]
+    },
+    {
+      "source": "/assets/glb/(.*)\\.gltf",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "model/gltf+json"
+        }
+      ]
+    }
+  ]
+}
