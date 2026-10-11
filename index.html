@@ -39,6 +39,8 @@
 
     <meta name="msapplication-TileColor" content="#050505">
     <meta name="theme-color" content="#050505">
+    <link rel="preload" href="assets/glb/spider.glb" as="fetch" crossorigin>
+    <link rel="preload" href="assets/glb/storm_breaker.glb" as="fetch" crossorigin>
     <script>
         /* <![CDATA[ */
         var siteData = {
@@ -46,7 +48,7 @@
         };
         /* ]]> */
     </script>
-    <script src="assets/js/caching.js?v=1.0.0.3"></script>
+    <script src="assets/js/caching.js?v=1.0.0.6"></script>
     <style>
         body:not(.site__template-mobile) .is-animation-loading {
             opacity: 0;
@@ -76,7 +78,9 @@
         }
 
         /* ===================================================
-           THEME SWITCHER & LIGHT THEME (SPIDER-MAN INSPIRED)
+           THEME SWITCHER & DUAL THEMES:
+           - DARK MODE: THOR THEME (Deep Black + Thunder Electric Blue / Lightning)
+           - LIGHT MODE: REFINED MATTE OFF-WHITE (Easy on the eyes + Balanced Studio 3D)
            =================================================== */
         .theme_toggle {
             position: fixed;
@@ -85,9 +89,9 @@
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: rgba(15, 15, 20, 0.8);
-            border: 1px solid rgba(230, 0, 18, 0.5);
-            color: #FFFFFF;
+            background: rgba(10, 15, 26, 0.85);
+            border: 1px solid rgba(0, 210, 255, 0.45);
+            color: #00D2FF;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -98,13 +102,14 @@
             outline: none;
             z-index: 1001;
             padding: 0;
-            box-shadow: 0 0 12px rgba(230, 0, 18, 0.25);
+            box-shadow: 0 0 16px rgba(0, 210, 255, 0.25);
         }
 
         .theme_toggle:hover {
-            border-color: #FFD700;
-            box-shadow: 0 0 16px rgba(255, 215, 0, 0.45);
+            border-color: #38BDF8;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.55), 0 0 35px rgba(0, 119, 254, 0.3);
             transform: scale(1.08);
+            color: #FFFFFF;
         }
 
         .theme_toggle:active {
@@ -119,10 +124,12 @@
             transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
+        /* Dark Mode (Thor Thunder) */
         [data-theme="dark"] .theme_toggle_icon__dark {
             opacity: 1;
             transform: rotate(0deg) scale(1);
-            color: #FFD700;
+            color: #00D2FF;
+            filter: drop-shadow(0 0 6px #00D2FF);
         }
 
         [data-theme="dark"] .theme_toggle_icon__light {
@@ -131,6 +138,7 @@
             pointer-events: none;
         }
 
+        /* Light Mode */
         [data-theme="light"] .theme_toggle_icon__dark {
             opacity: 0;
             transform: rotate(-90deg) scale(0.5);
@@ -140,55 +148,82 @@
         [data-theme="light"] .theme_toggle_icon__light {
             opacity: 1;
             transform: rotate(0deg) scale(1);
-            color: #D80010;
+            color: #14161D;
         }
 
+        /* ── LIGHT MODE STYLING (#FFFFE4 Calming Matte Off-White) ── */
         [data-theme="light"] {
             color-scheme: light;
         }
 
         [data-theme="light"] body,
         [data-theme="light"] .layer__dark {
-            background-color: #F6F6F9 !important;
-            color: #111115 !important;
+            background-color: #FFFFE4 !important;
+            color: #14161D !important;
+        }
+
+        [data-theme="light"] body::-webkit-scrollbar-track {
+            background: #FFFFE4 !important;
+        }
+
+        [data-theme="light"] body::-webkit-scrollbar-thumb {
+            background: #D5D5B8 !important;
+        }
+
+        /* Fix profile image & header blend mode */
+        .header,
+        .footer {
+            mix-blend-mode: normal !important;
+        }
+
+        .header_logo img {
+            mix-blend-mode: normal !important;
+            filter: none !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+        }
+
+        [data-theme="light"] .header_logo img {
+            border: 2px solid rgba(0, 0, 0, 0.12);
         }
 
         [data-theme="light"] .theme_toggle {
-            background: rgba(245, 245, 250, 0.9) !important;
-            border-color: rgba(216, 0, 16, 0.45) !important;
-            color: #111115 !important;
+            background: rgba(255, 255, 240, 0.95) !important;
+            border-color: rgba(0, 0, 0, 0.15) !important;
+            color: #14161D !important;
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
         }
 
         [data-theme="light"] .theme_toggle:hover {
-            border-color: #D80010 !important;
-            box-shadow: 0 0 16px rgba(216, 0, 16, 0.35) !important;
+            border-color: rgba(230, 0, 18, 0.6) !important;
+            box-shadow: 0 0 16px rgba(230, 0, 18, 0.3) !important;
+            color: #E60012 !important;
         }
 
         [data-theme="light"] .header_toggle {
-            background: rgba(245, 245, 250, 0.9) !important;
-            border-color: rgba(216, 0, 16, 0.45) !important;
+            background: rgba(255, 255, 240, 0.95) !important;
+            border-color: rgba(0, 0, 0, 0.15) !important;
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
         }
 
         [data-theme="light"] .header_toggle_bar {
-            background-color: #111115 !important;
+            background-color: #14161D !important;
         }
 
         [data-theme="light"] .header_menu {
-            background: rgba(246, 246, 249, 0.98) !important;
+            background: transparent !important;
         }
 
         [data-theme="light"] .header_menu_item a,
         [data-theme="light"] .header_menu_item_link__deep {
-            color: #111115 !important;
+            color: #14161D !important;
             text-shadow: none !important;
         }
 
         [data-theme="light"] .header_menu_item a:hover,
-        [data-theme="light"] .header_menu_item_link__deep:hover {
-            color: #D80010 !important;
-            text-shadow: 0 0 15px rgba(216, 0, 16, 0.4) !important;
+        [data-theme="light"] .header_menu_item_link__deep:hover,
+        [data-theme="light"] .header_menu_item_link__active {
+            color: #E60012 !important;
+            text-shadow: 0 0 12px rgba(230, 0, 18, 0.35) !important;
         }
 
         [data-theme="light"] h1,
@@ -200,145 +235,232 @@
         [data-theme="light"] .glitch-text,
         [data-theme="light"] .scroll-paragraph-mask,
         [data-theme="light"] .motto_content_heading {
-            color: #111115 !important;
+            color: #14161D !important;
         }
 
         [data-theme="light"] .hero_content_inner_subtitle {
-            color: #D80010 !important;
+            color: #E60012 !important;
         }
 
         [data-theme="light"] .desc,
         [data-theme="light"] .body-text,
         [data-theme="light"] .about_content_label,
         [data-theme="light"] .client_content_label {
-            color: #444448 !important;
+            color: #4B5565 !important;
         }
 
         [data-theme="light"] .certificate_item {
-            background: #FFFFFF !important;
-            border: 1px solid rgba(216, 0, 16, 0.25) !important;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
+            background: #FFFDF8 !important;
+            border: 1px solid rgba(0, 0, 0, 0.08) !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        [data-theme="light"] .certificate_item img {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
         }
 
         [data-theme="light"] .certificate_item_body {
-            color: #111115 !important;
+            color: #14161D !important;
         }
 
         [data-theme="light"] .certificate_item_body h4,
         [data-theme="light"] .certificate_item_body p {
-            color: #111115 !important;
+            color: #14161D !important;
         }
 
         [data-theme="light"] .social-link {
-            color: #111115 !important;
+            color: #14161D !important;
         }
 
         [data-theme="light"] .social-link:hover {
-            color: #D80010 !important;
+            color: #E60012 !important;
         }
 
         [data-theme="light"] .contact_box {
-            border-color: rgba(216, 0, 16, 0.3) !important;
-            background: rgba(255, 255, 255, 0.8) !important;
+            border-color: rgba(0, 0, 0, 0.12) !important;
+            background: rgba(255, 255, 240, 0.9) !important;
+        }
+
+        /* ── React Bits: SpotlightCard Component ── */
+        .spotlight-card {
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .spotlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            border-radius: inherit;
+            z-index: 2;
+        }
+
+        .spotlight-card:hover::before {
+            opacity: 1;
+        }
+
+        [data-theme="dark"] .spotlight-card::before {
+            background: radial-gradient(450px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                    rgba(0, 210, 255, 0.18),
+                    transparent 65%);
+        }
+
+        [data-theme="light"] .spotlight-card::before {
+            background: radial-gradient(450px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                    rgba(230, 0, 18, 0.09),
+                    transparent 65%);
+        }
+
+        /* ── Spider Lanyard Container (Full Viewport) ── */
+        #spider-lanyard-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 50;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        [data-theme="dark"] #spider-lanyard-wrap {
+            display: none !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
         }
 
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
+
+            *,
+            *::before,
+            *::after {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
                 scroll-behavior: auto !important;
             }
+
             .glitch-text {
                 animation: none !important;
                 text-shadow: none !important;
             }
         }
 
-        /* Mask Fallback */
+        /* Mask Layer (Smooth dimension shift: Spidey Red in Light Mode / Thunder Midnight in Dark Mode) */
         .layer__red {
-            -webkit-mask-image: radial-gradient(circle var(--size) at var(--x) var(--y), black 100%, transparent 100%) !important;
-            mask-image: radial-gradient(circle var(--size) at var(--x) var(--y), black 100%, transparent 100%) !important;
-            -webkit-mask-position: 0 0 !important;
-            mask-position: 0 0 !important;
-            -webkit-mask-size: 100% 100% !important;
-            mask-size: 100% 100% !important;
+            -webkit-mask-image: url(assets/icons/test-mask.svg) !important;
+            mask-image: url(assets/icons/test-mask.svg) !important;
+            -webkit-mask-position: calc(var(--x, -999px) - var(--size, 0px)/2) calc(var(--y, -999px) - var(--size, 0px)/2) !important;
+            mask-position: calc(var(--x, -999px) - var(--size, 0px)/2) calc(var(--y, -999px) - var(--size, 0px)/2) !important;
+            -webkit-mask-repeat: no-repeat !important;
+            mask-repeat: no-repeat !important;
+            -webkit-mask-size: var(--size, 0px) var(--size, 0px) !important;
+            mask-size: var(--size, 0px) var(--size, 0px) !important;
+            pointer-events: none !important;
         }
 
-        /* Disable mask reveal for specific sections */
-        .layer__red .js-no-mask-section {
-            opacity: 0 !important;
+        [data-theme="light"] .layer__red {
+            background-color: #E60012 !important;
         }
 
-        /* 1. Glitch Effect for Hero Text */
+        [data-theme="dark"] .layer__red {
+            background-color: #00D2FF !important;
+        }
+
+        /* 1. Glitch Effect for Hero Text — Thor Thunder Chromatic Aberration */
         .glitch-text {
             position: relative;
             display: inline-block;
         }
 
         .glitch-text:hover {
-            animation: glitch 0.3s infinite;
+            animation: glitch-thunder 0.3s infinite;
         }
 
-        @keyframes glitch {
+        @keyframes glitch-thunder {
             0% {
-                text-shadow: 3px 0 #E60012, -3px 0 #00FFFF;
+                text-shadow: 3px 0 #00D2FF, -3px 0 #0077FE;
                 transform: translate(2px, 0);
             }
 
             20% {
-                text-shadow: -3px 0 #E60012, 3px 0 #00FFFF;
+                text-shadow: -3px 0 #00D2FF, 3px 0 #38BDF8;
                 transform: translate(-2px, 0);
             }
 
             40% {
-                text-shadow: 3px 0 #E60012, -3px 0 #00FFFF;
+                text-shadow: 3px 0 #00D2FF, -3px 0 #0077FE;
                 transform: translate(1px, -1px);
             }
 
             60% {
-                text-shadow: -3px 0 #E60012, 3px 0 #00FFFF;
+                text-shadow: -3px 0 #38BDF8, 3px 0 #00D2FF;
                 transform: translate(-1px, 1px);
             }
 
             80% {
-                text-shadow: 3px 0 #E60012, -3px 0 #00FFFF;
+                text-shadow: 3px 0 #00D2FF, -3px 0 #0077FE;
                 transform: translate(2px, 1px);
             }
 
             100% {
-                text-shadow: -3px 0 #E60012, 3px 0 #00FFFF;
+                text-shadow: -3px 0 #00D2FF, 3px 0 #38BDF8;
                 transform: translate(0, 0);
             }
         }
 
-        /* 2. Venom Blast Glow on Hover */
-        a:hover,
-        .header_menu_item:hover,
-        .contact_link:hover,
-        .social_link:hover,
-        .social_link__github:hover,
-        .link-logo:hover,
-        .cert-btn-prev:hover,
-        .cert-btn-next:hover,
-        .cert-btn-prev-red:hover,
-        .cert-btn-next-red:hover {
-            text-shadow: 0 0 10px #FFD700, 0 0 20px #FFA500 !important;
-            color: #FFD700 !important;
+        /* 2. Thor Thunder Lightning Glow on Hover (Dark) & Spidey Red Glow (Light) */
+        [data-theme="dark"] a:hover,
+        [data-theme="dark"] button:hover,
+        [data-theme="dark"] .header_menu_item:hover,
+        [data-theme="dark"] .contact_link:hover,
+        [data-theme="dark"] .social_link:hover,
+        [data-theme="dark"] .social_link__github:hover,
+        [data-theme="dark"] .social_link__linkedin:hover,
+        [data-theme="dark"] .link-logo:hover,
+        [data-theme="dark"] .cert-btn-prev:hover,
+        [data-theme="dark"] .cert-btn-next:hover,
+        [data-theme="dark"] .cert-btn-prev-red:hover,
+        [data-theme="dark"] .cert-btn-next-red:hover {
+            text-shadow: 0 0 10px #00D2FF, 0 0 22px #0077FE !important;
+            color: #00D2FF !important;
             transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .cert-btn-prev:hover,
-        .cert-btn-next:hover,
-        .cert-btn-prev-red:hover,
-        .cert-btn-next-red:hover {
-            box-shadow: 0 0 20px #FFD700 !important;
-            border-color: #FFD700 !important;
-            background: #FFD700 !important;
-            color: #000 !important;
+        [data-theme="dark"] .cert-btn-prev:hover,
+        [data-theme="dark"] .cert-btn-next:hover,
+        [data-theme="dark"] .cert-btn-prev-red:hover,
+        [data-theme="dark"] .cert-btn-next-red:hover {
+            box-shadow: 0 0 20px #00D2FF, 0 0 35px rgba(0, 119, 254, 0.4) !important;
+            border-color: #00D2FF !important;
+            background: #00D2FF !important;
+            color: #05070B !important;
         }
 
-        /* 3. Miles Morales Custom Cursor */
+        [data-theme="light"] a:hover,
+        [data-theme="light"] .contact_link:hover {
+            color: #E60012 !important;
+            transition: 0.2s ease;
+        }
+
+        [data-theme="light"] .cert-btn-prev:hover,
+        [data-theme="light"] .cert-btn-next:hover,
+        [data-theme="light"] .cert-btn-prev-red:hover,
+        [data-theme="light"] .cert-btn-next-red:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+            border-color: #14161D !important;
+            background: #14161D !important;
+            color: #FFFFFF !important;
+        }
+
+        /* 3. Custom Cursor — Blue Circle in Dark / Red Circle in Light */
         .vj-cursor,
         .js-vj-cursor {
             opacity: 1 !important;
@@ -346,15 +468,16 @@
             z-index: 999999 !important;
         }
 
-        .vj-cursor::after,
-        .js-vj-cursor::after {
+        /* Dark Mode Cursor (Thor Blue) */
+        [data-theme="dark"] .vj-cursor::after,
+        [data-theme="dark"] .js-vj-cursor::after {
             content: '' !important;
             position: absolute !important;
             width: 10px !important;
             height: 10px !important;
             background: #FFFFFF !important;
             border-radius: 50% !important;
-            box-shadow: 0 0 15px #E60012, 0 0 30px #E60012 !important;
+            box-shadow: 0 0 15px #00D2FF, 0 0 30px #0077FE !important;
             top: 50% !important;
             left: 50% !important;
             transform: translate(-50%, -50%) !important;
@@ -363,13 +486,48 @@
             pointer-events: none !important;
         }
 
-        .vj-cursor::before {
+        [data-theme="dark"] .vj-cursor::before {
+            content: '' !important;
+            position: absolute !important;
+            width: 40px !important;
+            height: 40px !important;
+            border: 2px solid #00D2FF !important;
+            border-radius: 50% !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) scale(0) !important;
+            animation: thunder-pulse 3s infinite !important;
+            pointer-events: none !important;
+            z-index: 999998 !important;
+            display: block !important;
+        }
+
+        /* Light Mode Cursor (Spidey Red Circle) */
+        [data-theme="light"] .vj-cursor::after,
+        [data-theme="light"] .js-vj-cursor::after {
+            content: '' !important;
+            position: absolute !important;
+            width: 10px !important;
+            height: 10px !important;
+            background: #FFFFFF !important;
+            border-radius: 50% !important;
+            box-shadow: 0 0 15px #E60012, 0 0 30px #E60012, 0 0 45px rgba(230, 0, 18, 0.6) !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            z-index: 999999 !important;
+            display: block !important;
+            pointer-events: none !important;
+        }
+
+        [data-theme="light"] .vj-cursor::before {
             content: '' !important;
             position: absolute !important;
             width: 40px !important;
             height: 40px !important;
             border: 2px solid #E60012 !important;
             border-radius: 50% !important;
+            box-shadow: 0 0 15px rgba(230, 0, 18, 0.35) !important;
             top: 50% !important;
             left: 50% !important;
             transform: translate(-50%, -50%) scale(0) !important;
@@ -397,6 +555,63 @@
             100% {
                 opacity: 0;
             }
+        }
+
+        @keyframes thunder-pulse {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            40% {
+                transform: translate(-50%, -50%) scale(4);
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* Footer Social Icons - High Contrast Visibility */
+        .footer_socials {
+            z-index: 1000 !important;
+        }
+
+        [data-theme="light"] .footer_socials img,
+        [data-theme="light"] .footer_socials svg,
+        [data-theme="light"] .footer_socials .svg {
+            filter: brightness(0) !important;
+            opacity: 0.88 !important;
+            transition: all 0.25s ease !important;
+        }
+
+        [data-theme="light"] .footer_socials a:hover img,
+        [data-theme="light"] .footer_socials a:hover svg,
+        [data-theme="light"] .footer_socials a:hover .svg {
+            filter: invert(15%) sepia(95%) saturate(6932%) hue-rotate(356deg) brightness(94%) contrast(116%) drop-shadow(0 0 8px rgba(230, 0, 18, 0.6)) !important;
+            opacity: 1 !important;
+            transform: scale(1.15);
+        }
+
+        [data-theme="dark"] .footer_socials img,
+        [data-theme="dark"] .footer_socials svg,
+        [data-theme="dark"] .footer_socials .svg {
+            filter: invert(1) drop-shadow(0 0 6px rgba(0, 210, 255, 0.5)) !important;
+            opacity: 0.9 !important;
+            transition: all 0.25s ease !important;
+        }
+
+        [data-theme="dark"] .footer_socials a:hover img,
+        [data-theme="dark"] .footer_socials a:hover svg,
+        [data-theme="dark"] .footer_socials a:hover .svg {
+            filter: invert(65%) sepia(85%) saturate(2400%) hue-rotate(160deg) brightness(105%) contrast(105%) drop-shadow(0 0 12px #00D2FF) !important;
+            opacity: 1 !important;
+            transform: scale(1.15);
         }
 
         /* 2. Glitchy Profile Logo */
@@ -435,38 +650,132 @@
             }
         }
 
-        /* 4. Refined Venom Blast Pulse */
-        .contact_link,
-        .cert-btn-prev,
-        .cert-btn-next {
-            animation: venom-pulse 5s infinite;
+        /* 4. Refined Pulse for Buttons */
+        [data-theme="dark"] .contact_link,
+        [data-theme="dark"] .cert-btn-prev,
+        [data-theme="dark"] .cert-btn-next {
+            animation: thunder-btn-pulse 5s infinite;
         }
 
-        @keyframes venom-pulse {
-            0% {
-                text-shadow: none;
-                box-shadow: none;
-            }
+        @keyframes thunder-btn-pulse {
 
-            94% {
+            0%,
+            94%,
+            100% {
                 text-shadow: none;
                 box-shadow: none;
             }
 
             96% {
-                text-shadow: 0 0 15px #FFD700;
-                box-shadow: 0 0 10px #FFD700;
+                text-shadow: 0 0 15px #00D2FF;
+                box-shadow: 0 0 12px rgba(0, 210, 255, 0.4);
             }
 
             98% {
-                text-shadow: 0 0 25px #FFD700;
-                box-shadow: 0 0 20px #FFD700;
+                text-shadow: 0 0 25px #00D2FF, 0 0 35px #0077FE;
+                box-shadow: 0 0 22px rgba(0, 210, 255, 0.6);
             }
+        }
 
-            100% {
-                text-shadow: none;
-                box-shadow: none;
-            }
+        /* 5. Resume Action Buttons */
+        .resume_button_group {
+            display: inline-flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .resume_btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            text-decoration: none !important;
+            border-radius: 6px;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            pointer-events: auto !important;
+            white-space: nowrap;
+        }
+
+        [data-theme="dark"] .resume_btn__view {
+            background: rgba(0, 210, 255, 0.12);
+            color: #00D2FF !important;
+            border: 1px solid rgba(0, 210, 255, 0.5);
+            backdrop-filter: blur(8px);
+        }
+
+        [data-theme="dark"] .resume_btn__view:hover {
+            background: rgba(0, 210, 255, 0.25);
+            border-color: #00D2FF;
+            box-shadow: 0 0 16px rgba(0, 210, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        [data-theme="dark"] .resume_btn__download {
+            background: #00D2FF;
+            color: #050B14 !important;
+            border: 1px solid #00D2FF;
+            box-shadow: 0 0 12px rgba(0, 210, 255, 0.35);
+        }
+
+        [data-theme="dark"] .resume_btn__download:hover {
+            background: #38BDF8;
+            box-shadow: 0 0 22px rgba(0, 210, 255, 0.7);
+            transform: translateY(-2px);
+        }
+
+        [data-theme="light"] .resume_btn__view {
+            background: rgba(230, 0, 18, 0.08);
+            color: #E60012 !important;
+            border: 1px solid rgba(230, 0, 18, 0.4);
+        }
+
+        [data-theme="light"] .resume_btn__view:hover {
+            background: rgba(230, 0, 18, 0.16);
+            border-color: #E60012;
+            transform: translateY(-2px);
+        }
+
+        [data-theme="light"] .resume_btn__download {
+            background: #E60012;
+            color: #FFFFFF !important;
+            border: 1px solid #E60012;
+            box-shadow: 0 4px 10px rgba(230, 0, 18, 0.25);
+        }
+
+        [data-theme="light"] .resume_btn__download:hover {
+            background: #C4000F;
+            box-shadow: 0 6px 16px rgba(230, 0, 18, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .resume_btn__masking {
+            background: #050B14 !important;
+            color: #FFFFFF !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        }
+
+        .resume_btn__masking:hover {
+            background: #000000 !important;
+            border-color: #FFFFFF !important;
+        }
+
+        .resume_btn__red {
+            background: #050505 !important;
+            color: #FFFFFF !important;
+            border: 1px solid #444 !important;
+        }
+
+        .resume_btn__red:hover {
+            background: #E60012 !important;
+            border-color: #E60012 !important;
+            box-shadow: 0 4px 12px rgba(230, 0, 18, 0.4) !important;
         }
 
         .hero_content {
@@ -477,7 +786,6 @@
             width: 100% !important;
             left: 0 !important;
             height: 100vh !important;
-            /* Force full height centering */
         }
 
         .hero_content_inner {
@@ -493,7 +801,6 @@
         a:hover,
         button:hover {
             cursor: none !important;
-            /* Hide system cursor on hover to use custom one */
         }
 
         /* 5. Smooth Reveal on Scroll */
@@ -503,7 +810,7 @@
             transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        /* 5. Spider-Man Typography */
+        /* Typography */
         h1,
         h2,
         h3,
@@ -521,22 +828,25 @@
             font-family: 'Inter', sans-serif !important;
         }
 
-        /* 1. Chromatic Aberration */
-        h1.glitch-text {
-            text-shadow: 2px 0 1px rgba(230, 0, 18, 0.8), -2px 0 1px rgba(0, 255, 255, 0.8) !important;
+        /* Chromatic Aberration Header */
+        [data-theme="dark"] h1.glitch-text {
+            text-shadow: 2px 0 1px rgba(0, 210, 255, 0.8), -2px 0 1px rgba(0, 119, 254, 0.8) !important;
         }
 
-        /* 2. Web Particle Canvas */
+        [data-theme="light"] h1.glitch-text {
+            text-shadow: 2px 0 1px rgba(230, 0, 18, 0.4), -2px 0 1px rgba(0, 119, 254, 0.3) !important;
+        }
+
+        /* Background Canvas */
         #web-canvas {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
             pointer-events: none;
-            opacity: 0.15;
-            /* Much subtler */
+            opacity: 1;
         }
 
         .reveal-on-scroll.revealed {
@@ -544,10 +854,6 @@
             transform: translateY(0) !important;
             visibility: visible !important;
         }
-
-        /* ===================================================
-           PHASE 2 RESPONSIVE ENHANCEMENTS
-           =================================================== */
 
         /* Responsive Hero Typography */
         h1.glitch-text {
@@ -574,10 +880,10 @@
             right: 1.25rem;
             width: 44px;
             height: 44px;
-            background: rgba(15, 15, 15, 0.75);
+            background: rgba(10, 15, 26, 0.85);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(230, 0, 18, 0.5);
+            border: 1px solid rgba(0, 210, 255, 0.45);
             border-radius: 50%;
             z-index: 1000;
             cursor: pointer;
@@ -587,13 +893,13 @@
             gap: 4px;
             padding: 0;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 10px rgba(230, 0, 18, 0.2);
+            box-shadow: 0 0 12px rgba(0, 210, 255, 0.25);
         }
 
         .header_toggle:hover,
         .header_toggle:active {
-            border-color: #FFD700;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            border-color: #38BDF8;
+            box-shadow: 0 0 16px rgba(0, 210, 255, 0.5);
         }
 
         .header_toggle_bar {
@@ -606,7 +912,7 @@
 
         .header_toggle.is-active .header_toggle_bar:nth-child(1) {
             transform: translateY(6px) rotate(45deg);
-            background-color: #E60012;
+            background-color: var(--accent-color, #00D2FF);
         }
 
         .header_toggle.is-active .header_toggle_bar:nth-child(2) {
@@ -615,7 +921,7 @@
 
         .header_toggle.is-active .header_toggle_bar:nth-child(3) {
             transform: translateY(-6px) rotate(-45deg);
-            background-color: #E60012;
+            background-color: var(--accent-color, #00D2FF);
         }
 
         /* Responsive Certificates */
@@ -662,16 +968,39 @@
         }
 
         /* ===================================================
-           SPIDER-MAN INTERACTIVE 3D ARTWORK (PHASE 6)
+           SPIDER-MAN & THOR 3D ARTWORK POSITIONING
            =================================================== */
         .about_ido_coffee {
-            position: absolute;
-            left: -3rem;
-            bottom: -2rem;
-            width: 320px;
-            height: 320px;
-            z-index: 1;
-            pointer-events: none;
+            position: absolute !important;
+            left: -3rem !important;
+            top: -2rem !important;
+            bottom: auto !important;
+            right: auto !important;
+            width: 520px !important;
+            height: 520px !important;
+            overflow: visible !important;
+            z-index: 1 !important;
+            pointer-events: none !important;
+        }
+
+        .about_ido_web,
+        .about_ido_mouse {
+            position: absolute !important;
+            right: -2.5rem !important;
+            bottom: -3.5rem !important;
+            top: auto !important;
+            left: auto !important;
+            width: 520px !important;
+            height: 520px !important;
+            overflow: visible !important;
+            z-index: 1 !important;
+            pointer-events: none !important;
+            display: none !important;
+        }
+
+        [data-theme="light"] .about_ido_web,
+        [data-theme="light"] .about_ido_mouse {
+            display: block !important;
         }
 
         .client_list_3d {
@@ -686,27 +1015,158 @@
         }
 
         .client_list_3d_inner,
-        .about_ido_inner {
+        .about_ido_inner,
+        .about_ido_web_inner {
             width: 100%;
             height: 100%;
             pointer-events: none;
         }
 
-        /* Responsive Breakpoints */
+        .client_list_3d canvas {
+            opacity: 0.7;
+        }
+
+        /* ── Music Controller Toggle Button ── */
+        .music_toggle {
+            position: fixed;
+            top: 1.25rem;
+            right: 4.65rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(10, 15, 26, 0.85);
+            border: 1px solid rgba(0, 210, 255, 0.45);
+            color: #00D2FF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            outline: none;
+            z-index: 1001;
+            padding: 0;
+            box-shadow: 0 0 16px rgba(0, 210, 255, 0.25);
+        }
+
+        .music_toggle:hover {
+            border-color: #38BDF8;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.55), 0 0 35px rgba(0, 119, 254, 0.3);
+            transform: scale(1.08);
+            color: #FFFFFF;
+        }
+
+        .music_toggle:active {
+            transform: scale(0.92);
+        }
+
+        .music_toggle_icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .music_toggle_icon__muted {
+            display: none;
+            opacity: 0.75;
+        }
+
+        .music_toggle_icon__playing {
+            display: flex;
+            align-items: flex-end;
+            height: 18px;
+            width: 18px;
+            justify-content: center;
+            gap: 2.5px;
+        }
+
+        .music_bar {
+            width: 2.5px;
+            background-color: currentColor;
+            border-radius: 2px;
+            height: 4px;
+        }
+
+        .music_toggle.is-playing .music_bar--1 {
+            animation: soundWave 1.1s ease-in-out infinite alternate;
+        }
+        .music_toggle.is-playing .music_bar--2 {
+            animation: soundWave 0.8s ease-in-out infinite alternate 0.25s;
+        }
+        .music_toggle.is-playing .music_bar--3 {
+            animation: soundWave 1.3s ease-in-out infinite alternate 0.4s;
+        }
+
+        @keyframes soundWave {
+            0% { height: 4px; }
+            100% { height: 16px; }
+        }
+
+        .music_toggle.is-muted .music_toggle_icon__playing {
+            display: none;
+        }
+
+        .music_toggle.is-muted .music_toggle_icon__muted {
+            display: flex;
+        }
+
+        [data-theme="light"] .music_toggle {
+            background: rgba(255, 255, 240, 0.95) !important;
+            border-color: rgba(0, 0, 0, 0.15) !important;
+            color: #14161D !important;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
+        }
+
+        [data-theme="light"] .music_toggle:hover {
+            border-color: rgba(230, 0, 18, 0.6) !important;
+            box-shadow: 0 0 16px rgba(230, 0, 18, 0.3) !important;
+            color: #E60012 !important;
+        }
+
+        /* Responsive Breakpoints & Mobile Optimization */
+        html,
+        body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+            width: 100% !important;
+        }
+
         @media (max-width: 767.98px) {
             .header {
                 mix-blend-mode: normal !important;
             }
 
+            .header_logo {
+                top: 1rem !important;
+                left: 1.15rem !important;
+            }
+
+            .header_logo img {
+                width: 42px !important;
+                height: 42px !important;
+            }
+
             .theme_toggle {
-                top: 1.25rem;
-                right: 4.75rem;
-                width: 44px;
-                height: 44px;
+                top: 1rem !important;
+                right: 4.25rem !important;
+                width: 42px !important;
+                height: 42px !important;
+            }
+
+            .music_toggle {
+                top: 1rem !important;
+                right: 7.35rem !important;
+                width: 42px !important;
+                height: 42px !important;
             }
 
             .header_toggle {
-                display: flex;
+                display: flex !important;
+                top: 1rem !important;
+                right: 1.15rem !important;
+                width: 42px !important;
+                height: 42px !important;
             }
 
             .header_menu {
@@ -718,7 +1178,7 @@
                 width: 100vw !important;
                 height: 100vh !important;
                 height: 100dvh !important;
-                background: rgba(5, 5, 5, 0.97) !important;
+                background: rgba(5, 5, 5, 0.98) !important;
                 backdrop-filter: blur(24px) !important;
                 -webkit-backdrop-filter: blur(24px) !important;
                 display: flex !important;
@@ -731,6 +1191,10 @@
                 z-index: 999 !important;
             }
 
+            [data-theme="light"] .header_menu {
+                background: rgba(255, 255, 240, 0.98) !important;
+            }
+
             .header_menu.is-open {
                 opacity: 1 !important;
                 visibility: visible !important;
@@ -741,7 +1205,7 @@
                 display: flex !important;
                 flex-direction: column !important;
                 align-items: center !important;
-                gap: 2.25rem !important;
+                gap: 2rem !important;
                 text-align: center !important;
             }
 
@@ -757,7 +1221,7 @@
             .header_menu_item a,
             .header_menu_item_link__deep {
                 font-family: 'Bebas Neue', sans-serif !important;
-                font-size: 2.5rem !important;
+                font-size: 2.35rem !important;
                 letter-spacing: 2px !important;
                 padding: 0.5rem 1rem !important;
                 color: #FFFFFF !important;
@@ -766,12 +1230,26 @@
                 display: block;
             }
 
+            [data-theme="light"] .header_menu_item a,
+            [data-theme="light"] .header_menu_item_link__deep {
+                color: #14161D !important;
+                text-shadow: none !important;
+            }
+
             .header_menu_item a:active,
             .header_menu_item a:hover,
             .header_menu_item_link__deep:active,
             .header_menu_item_link__deep:hover {
-                color: #FFD700 !important;
-                text-shadow: 0 0 18px #FFD700, 0 0 30px rgba(255, 215, 0, 0.6) !important;
+                color: #00D2FF !important;
+                text-shadow: 0 0 18px #00D2FF, 0 0 30px rgba(0, 210, 255, 0.6) !important;
+            }
+
+            [data-theme="light"] .header_menu_item a:active,
+            [data-theme="light"] .header_menu_item a:hover,
+            [data-theme="light"] .header_menu_item_link__deep:active,
+            [data-theme="light"] .header_menu_item_link__deep:hover {
+                color: #E60012 !important;
+                text-shadow: 0 0 12px rgba(230, 0, 18, 0.35) !important;
             }
 
             .certificates_scroll_container {
@@ -798,12 +1276,13 @@
             }
 
             .about_me {
-                margin-bottom: 4rem !important;
-                padding-top: 4rem !important;
+                margin-bottom: 3.5rem !important;
+                padding-top: 3.5rem !important;
             }
 
             .about_ido {
-                padding-bottom: 4rem !important;
+                padding-bottom: 3.5rem !important;
+                overflow: hidden !important;
             }
 
             .heading-mask_el .h1 {
@@ -816,25 +1295,35 @@
             }
 
             .motto {
-                padding: 4rem 0 !important;
+                padding: 3.5rem 0 !important;
             }
 
             .about_ido_coffee {
-                left: -1rem;
-                bottom: 0;
-                width: 160px;
-                height: 160px;
-                opacity: 0.7;
+                left: -1rem !important;
+                top: -1.5rem !important;
+                width: 260px !important;
+                height: 260px !important;
+                opacity: 0.75;
+            }
+
+            .about_ido_web {
+                right: -1rem !important;
+                bottom: -1.5rem !important;
+                width: 250px !important;
+                height: 250px !important;
+                max-width: 75vw;
+                max-height: 75vw;
+                opacity: 0.75;
             }
 
             .client_list_3d {
-                width: 260px;
-                height: 260px;
+                width: 240px !important;
+                height: 240px !important;
                 opacity: 0.6;
             }
 
             .contact {
-                padding-bottom: 4rem !important;
+                padding-bottom: 3.5rem !important;
             }
 
             .social-link {
@@ -842,8 +1331,72 @@
             }
         }
 
+        /* Small Phones (iPhone SE, Galaxy S, 360px - 480px) */
+        @media (max-width: 480px) {
+            .header_logo {
+                top: 0.85rem !important;
+                left: 0.85rem !important;
+            }
+
+            .header_logo img {
+                width: 38px !important;
+                height: 38px !important;
+            }
+
+            .header_toggle {
+                top: 0.85rem !important;
+                right: 0.85rem !important;
+                width: 38px !important;
+                height: 38px !important;
+            }
+
+            .theme_toggle {
+                top: 0.85rem !important;
+                right: 3.65rem !important;
+                width: 38px !important;
+                height: 38px !important;
+            }
+
+            .music_toggle {
+                top: 0.85rem !important;
+                right: 6.35rem !important;
+                width: 38px !important;
+                height: 38px !important;
+            }
+
+            .certificate_item {
+                flex: 0 0 calc(100vw - 32px) !important;
+                width: calc(100vw - 32px) !important;
+                max-width: 340px !important;
+            }
+
+            .certificate_item img {
+                height: 180px !important;
+            }
+
+            .about_ido_coffee {
+                width: 220px !important;
+                height: 220px !important;
+                left: -0.5rem !important;
+                top: -1rem !important;
+            }
+
+            .about_ido_web {
+                width: 210px !important;
+                height: 210px !important;
+                right: -0.5rem !important;
+                bottom: -1rem !important;
+            }
+
+            .client_list_3d {
+                width: 200px !important;
+                height: 200px !important;
+            }
+        }
+
         /* Touch Devices Adaptation */
         @media (hover: none) and (pointer: coarse) {
+
             .vj-cursor,
             .js-vj-cursor {
                 display: none !important;
@@ -851,10 +1404,6 @@
 
             * {
                 cursor: auto !important;
-            }
-
-            .layer__red {
-                display: none !important;
             }
         }
     </style>
@@ -870,17 +1419,28 @@
         gtag('config', 'G-79VFDFP12E');
     </script> -->
     <script>
-        (function() {
+        (function () {
             try {
                 var saved = localStorage.getItem('portfolio_theme');
                 var theme = saved || 'dark';
                 document.documentElement.setAttribute('data-theme', theme);
-            } catch(e) {}
+            } catch (e) { }
         })();
     </script>
-    <script defer="defer" src="vendor.bundle.js?v=miles_v3_final"></script>
-    <script defer="defer" src="app.bundle.js?v=miles_v3_final"></script>
-    <link href="app.css?v=miles_v3_final" rel="stylesheet">
+    <script defer="defer" src="vendor.bundle.js?v=v4_mobile"></script>
+    <script defer="defer" src="app.bundle.js?v=v4_mobile"></script>
+    <script defer="defer" src="assets/js/three.min.js?v=r128"></script>
+    <script defer="defer" src="assets/js/meshopt_decoder.js?v=fixed1"></script>
+    <script defer="defer" src="assets/js/GLTFLoader.js?v=r128"></script>
+    <script defer="defer" src="assets/js/spider_3d_scene.js?v=v20_mobile_perf"></script>
+    <script defer="defer" src="assets/js/spider_lanyard.js?v=v9_fastload"></script>
+    <script defer="defer" src="assets/js/decrypted_text.js?v=v2"></script>
+    <script defer="defer" src="assets/js/spotlight_card.js?v=v2"></script>
+    <script defer="defer" src="assets/js/magnetic_buttons.js?v=v2"></script>
+    <script defer="defer" src="assets/js/dynamic_theme_backgrounds.js?v=v6"></script>
+    <script defer="defer" src="assets/js/ripple_grid.js?v=v4"></script>
+    <script defer="defer" src="assets/js/theme_music.js?v=v4_docked"></script>
+    <link href="app.css?v=v17_projects_hover" rel="stylesheet">
 </head>
 
 <body class="home">
@@ -901,12 +1461,41 @@
         <div class="header_logo js-header_logo"><a class="link-logo" aria-label="Home page" href="#about"><img
                     src="assets/icons/profile.jpeg" alt="logo"
                     style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;"></a></div>
-        <button class="theme_toggle" id="js-theme_toggle" aria-label="Toggle visual theme" title="Toggle Light / Dark theme">
+        <button class="music_toggle" id="js-music_toggle" aria-label="Toggle background music"
+            title="Toggle background music">
+            <span class="music_toggle_icon music_toggle_icon__playing" title="Mute Music">
+                <span class="music_bar music_bar--1"></span>
+                <span class="music_bar music_bar--2"></span>
+                <span class="music_bar music_bar--3"></span>
+            </span>
+            <span class="music_toggle_icon music_toggle_icon__muted" title="Play Music">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                </svg>
+            </span>
+        </button>
+        <button class="theme_toggle" id="js-theme_toggle" aria-label="Toggle visual theme"
+            title="Toggle Thor / Light theme">
             <span class="theme_toggle_icon theme_toggle_icon__dark">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" stroke="none">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
             </span>
             <span class="theme_toggle_icon theme_toggle_icon__light">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
             </span>
         </button>
         <button class="header_toggle" id="js-header_toggle" aria-label="Toggle navigation menu" aria-expanded="false">
@@ -930,6 +1519,11 @@
                                 class="header_menu_item_link header_menu_item_link__deep">Contact</span> <span
                                 class="header_menu_item_link header_menu_item_link__active">Contact</span></span></a>
                 </li>
+                <li class="header_menu_item js-cursor-contract"><a href="Hrushikesh_Gangajadiya.pdf" target="_blank" rel="noopener noreferrer" class="desc text-uppercase"><span
+                            class="header_menu_item_inner"><span
+                                class="header_menu_item_link header_menu_item_link__deep">Resume</span> <span
+                                class="header_menu_item_link header_menu_item_link__active">Resume</span></span></a>
+                </li>
             </ul>
         </div>
     </header>
@@ -940,7 +1534,8 @@
                     <div class="hero">
                         <div class="hero_bg" data-lenis-parallax=".5">
                             <div class="w-100 h-100 js-anim--scale" data-screen-offset="0.3"><video id="hero-bg-video"
-                                    autoplay muted playsinline loop preload="none" data-pc=""
+                                    autoplay muted playsinline loop preload="none"
+                                    data-pc="assets/video/hero_mobile.mp4"
                                     data-mobile="assets/video/hero_mobile.mp4"></video></div>
                         </div>
                         <div class="hero_content">
@@ -973,6 +1568,9 @@
                         <div class="about_ido">
                             <div class="js-about_ido_coffee about_ido_coffee">
                                 <div class="js-about_ido_inner about_ido_inner" data-lenis-speed="-.1"></div>
+                            </div>
+                            <div class="js-about_ido_mouse about_ido_mouse about_ido_web js-about_ido_web">
+                                <div class="js-about_ido_inner about_ido_inner about_ido_web_inner" data-lenis-speed=".1"></div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-8 col-sm-10 offset-lg-2 offset-sm-1 col-12">
@@ -1147,16 +1745,7 @@
                 <div id="work">
                     <div class="work">
                         <div class="row work_experience">
-                            <div class="work_bg" data-lenis-speed=".5">
-                                <picture class="image__object-fit d-lg-block d-none" style="filter: brightness(0.3);">
-                                    <img src="assets/images/work.png" width="1728" height="1008"
-                                        sizes="(max-width: 1728px) 100vw, 1728px" alt="work" />
-                                </picture>
-                                <picture class="image__object-fit d-lg-none d-block" style="filter: brightness(0.3);">
-                                    <img src="assets/images/work-mobile.png" width="429" height="914"
-                                        sizes="(max-width: 429px) 100vw, 914px" alt="work-mobile" />
-                                </picture>
-                            </div>
+                            <div class="work_bg" data-lenis-speed=".5"></div>
                             <div class="col-lg-8 col-sm-10 offset-lg-2 offset-sm-1 col-12">
                                 <div class="work_content container_content js-no-mask-section">
                                     <p class="work_content_label body-text text-uppercase">Journey</p>
@@ -1247,7 +1836,7 @@
                                                         class="simple-masking_el js-simple-masking_el js-cursor-contract">
                                                         <h2
                                                             class="h1 mb-0 js-heading-mask_heading container_content none-break">
-                                                            Music Player</h2>
+                                                            <a href="https://github.com/GHrushikesh/Code-Atlas" target="_blank" rel="noopener noreferrer" class="project_anchor_link">Code Atlas</a></h2>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1258,13 +1847,12 @@
                                             <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12">
                                                 <div class="simple-masking overflow-hidden">
                                                     <div class="simple-masking_el">
-                                                        <h2 class="h1 mb-0 text-dark none-break">Music Player</h2>
+                                                        <h2 class="h1 mb-0 text-dark none-break"><a href="https://github.com/GHrushikesh/Code-Atlas" target="_blank" rel="noopener noreferrer" class="project_anchor_link">Code Atlas</a></h2>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-3 col-sm-4 text-dark d-sm-block d-none">
-                                                <p class="mb-0 desc">Interactive Music Player website with modern UI/UX
-                                                    design.</p>
+                                                <p class="mb-0 desc">Interactive Codebase visualizer, AST parser & architecture dependency graph.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -1277,7 +1865,7 @@
                                                     <div
                                                         class="simple-masking_el js-simple-masking_el js-cursor-contract">
                                                         <h2 class="h1 mb-0 js-heading-mask_heading container_content">
-                                                            Business Management System</h2>
+                                                            <a href="https://github.com/GHrushikesh/Ujjam-Computer-" target="_blank" rel="noopener noreferrer" class="project_anchor_link">ProShop Inventory & WhatsApp Automation</a></h2>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1288,13 +1876,12 @@
                                             <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12">
                                                 <div class="simple-masking overflow-hidden">
                                                     <div class="simple-masking_el">
-                                                        <h2 class="h1 mb-0 text-dark">Business Management
-                                                            System</h2>
+                                                        <h2 class="h1 mb-0 text-dark"><a href="https://github.com/GHrushikesh/Ujjam-Computer-" target="_blank" rel="noopener noreferrer" class="project_anchor_link">ProShop Inventory & WhatsApp Automation</a></h2>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-3 col-sm-4 text-dark d-sm-block d-none">
-                                                <p class="mb-0 desc">Comprehensive Business Management System.</p>
+                                                <p class="mb-0 desc">Product catalog management, inventory tracking & automated WhatsApp notifications.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -1308,7 +1895,7 @@
                                                         class="simple-masking_el js-simple-masking_el js-cursor-contract">
                                                         <h2
                                                             class="h1 mb-0 js-heading-mask_heading container_content op-05">
-                                                            Working on idea...</h2>
+                                                            <a href="https://github.com/GHrushikesh?tab=repositories" target="_blank" rel="noopener noreferrer" class="project_anchor_link">Working on idea...</a></h2>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1323,8 +1910,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="certificates" class="testimonials reveal-on-scroll"
-                        style="padding: 100px 0;">
+                    <div id="certificates" class="testimonials reveal-on-scroll" style="padding: 100px 0;">
                         <div class="row">
                             <div class="col-lg-8 col-sm-10 col-12 offset-lg-2 offset-sm-1">
                                 <div class="d-flex justify-content-between align-items-end mb-5">
@@ -1346,7 +1932,8 @@
                                 <div class="certificates_scroll_container js-no-mask-section">
                                     <!-- CCNA: Switching, Routing, and Wireless Essentials -->
                                     <div class="certificate_item">
-                                        <img src="assets/certificate/ccna_switching.png" alt="CCNA: Switching, Routing, and Wireless Essentials">
+                                        <img src="assets/certificate/ccna_switching.png"
+                                            alt="CCNA: Switching, Routing, and Wireless Essentials">
                                         <div class="certificate_item_body">
                                             <h3 class="h6 mb-1">CCNA: Switching, Routing, and Wireless Essentials</h3>
                                             <p class="desc op-05 small">Cisco Networking Academy</p>
@@ -1362,7 +1949,8 @@
                                     </div>
                                     <!-- CCNA: Introduction to Networks -->
                                     <div class="certificate_item">
-                                        <img src="assets/certificate/ccna_intro.png" alt="CCNA: Introduction to Networks">
+                                        <img src="assets/certificate/ccna_intro.png"
+                                            alt="CCNA: Introduction to Networks">
                                         <div class="certificate_item_body">
                                             <h3 class="h6 mb-1">CCNA: Introduction to Networks</h3>
                                             <p class="desc op-05 small">Cisco Networking Academy</p>
@@ -1370,7 +1958,8 @@
                                     </div>
                                     <!-- Problem Solving for Success -->
                                     <div class="certificate_item">
-                                        <img src="assets/certificate/infosys_problem_solving.png" alt="Problem Solving for Success">
+                                        <img src="assets/certificate/infosys_problem_solving.png"
+                                            alt="Problem Solving for Success">
                                         <div class="certificate_item_body">
                                             <h3 class="h6 mb-1">Problem Solving for Success</h3>
                                             <p class="desc op-05 small">Infosys Springboard</p>
@@ -1383,14 +1972,7 @@
                 </div>
                 <div id="contact">
                     <div class="motto">
-                        <div class="motto_bg" data-lenis-speed=".3">
-                            <picture class="image__object-fit d-sm-block d-none"><img
-                                    src="assets/images/banner-bottom.png" width="1728" height="1008"
-                                    sizes="(max-width: 1728px) 100vw, 1728px" alt="banner-bottom" /></picture>
-                            <picture class="image__object-fit d-sm-none d-block"><img
-                                    src="assets/images/banner-bottom-mobile.png" width="856" height="1720"
-                                    sizes="(max-width: 856px) 100vw, 856px" alt="banner-bottom-mobile" /></picture>
-                        </div>
+                        <div class="motto_bg" data-lenis-speed=".3"></div>
                         <div class="motto_content container_content">
                             <div class="row justify-content-center align-items-center">
                                 <div class="col-lg-8 col-12 motto_content_inner js-no-mask-section">
@@ -1433,6 +2015,22 @@
                                                 href="https://github.com/GHrushikesh" class="text-dark contact_link"
                                                 target="_blank">Check my repos</a></div>
                                     </li>
+                                    <li class="heading-mask social-link js-cursor-contract heading-mask__now h3">
+                                        <div class="heading-mask_el heading-mask_el__deep"><a
+                                                href="https://leetcode.com/u/Hrushikesh_2804/" class="contact_link"
+                                                target="_blank">LeetCode</a></div>
+                                        <div class="heading-mask_el heading-mask_el__masking"><a
+                                                href="https://leetcode.com/u/Hrushikesh_2804/" class="text-dark contact_link"
+                                                target="_blank">Check my solutions</a></div>
+                                    </li>
+                                    <li class="heading-mask social-link js-cursor-contract heading-mask__now h3">
+                                        <div class="heading-mask_el heading-mask_el__deep"><a
+                                                href="Hrushikesh_Gangajadiya.pdf" class="contact_link"
+                                                target="_blank" rel="noopener noreferrer">Resume</a></div>
+                                        <div class="heading-mask_el heading-mask_el__masking"><a
+                                                href="Hrushikesh_Gangajadiya.pdf" class="text-dark contact_link"
+                                                target="_blank" rel="noopener noreferrer">View & Download</a></div>
+                                    </li>
                                 </ul>
                             </div>
 
@@ -1461,6 +2059,24 @@
                                                     class="h4 d-block text-dark">Always exploring</span> <a
                                                     class="sub-content text-dark"
                                                     href="https://github.com/GHrushikesh">@hrushikesh</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-sm-5 offset-lg-0 offset-sm-1 col-12" style="margin-top: 1.5rem;">
+                                        <div class="heading-mask contact_info js-cursor-contract heading-mask__now">
+                                            <div class="heading-mask_el heading-mask_el__deep">
+                                                <span class="h4 d-block">Resume / CV</span>
+                                                <div class="resume_button_group">
+                                                    <a href="Hrushikesh_Gangajadiya.pdf" target="_blank" rel="noopener noreferrer" class="resume_btn resume_btn__view">View PDF ↗</a>
+                                                    <a href="Hrushikesh_Gangajadiya.pdf" download="Hrushikesh_Gangajadiya.pdf" class="resume_btn resume_btn__download">Download ⤓</a>
+                                                </div>
+                                            </div>
+                                            <div class="heading-mask_el heading-mask_el__masking">
+                                                <span class="h4 d-block text-dark">Resume / CV</span>
+                                                <div class="resume_button_group">
+                                                    <a href="Hrushikesh_Gangajadiya.pdf" target="_blank" rel="noopener noreferrer" class="resume_btn resume_btn__view resume_btn__masking">View PDF ↗</a>
+                                                    <a href="Hrushikesh_Gangajadiya.pdf" download="Hrushikesh_Gangajadiya.pdf" class="resume_btn resume_btn__download resume_btn__masking">Download ⤓</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1504,7 +2120,8 @@
                     <div class="about_ido">
                         <div class="row">
                             <div class="col-lg-8 col-sm-10 col-12 offset-lg-2 offset-sm-1">
-                                <p class="about_content_label container_content body-text text-uppercase text-dark">Focus
+                                <p class="about_content_label container_content body-text text-uppercase text-dark">
+                                    Focus
                                     Areas</p>
                             </div>
                         </div>
@@ -1545,7 +2162,8 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
-                                        <p class="mb-0 desc text-dark">Creating responsive and interactive web applications
+                                        <p class="mb-0 desc text-dark">Creating responsive and interactive web
+                                            applications
                                             using modern stacks.</p>
                                     </div>
                                 </div>
@@ -1573,7 +2191,8 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
-                                        <p class="mb-0 desc text-dark">Writing clean, efficient, and scalable code for diverse
+                                        <p class="mb-0 desc text-dark">Writing clean, efficient, and scalable code for
+                                            diverse
                                             software solutions.</p>
                                     </div>
                                 </div>
@@ -1601,7 +2220,8 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
-                                        <p class="mb-0 desc text-dark">Optimizing algorithms and data structures for maximum
+                                        <p class="mb-0 desc text-dark">Optimizing algorithms and data structures for
+                                            maximum
                                             performance.</p>
                                     </div>
                                 </div>
@@ -1629,7 +2249,8 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-sm-4 col-12 text-dark d-lg-none d-block">
-                                        <p class="mb-0 desc text-dark">Cracking complex logical challenges with efficient and
+                                        <p class="mb-0 desc text-dark">Cracking complex logical challenges with
+                                            efficient and
                                             elegant solutions.</p>
                                     </div>
                                 </div>
@@ -1653,7 +2274,7 @@
                 <div class="work work__red">
                     <div class="row work_experience">
                         <div class="col-lg-8 col-sm-10 offset-lg-2 offset-sm-1 col-12">
-                            <div class="work_content container_content js-no-mask-section">
+                            <div class="work_content container_content">
                                 <p class="work_content_label body-text text-uppercase text-dark">Journey</p>
                                 <div class="work_content_desc h2">
                                     <div class="scroll-paragraph-mask text-dark">Building beyond the classroom.</div>
@@ -1668,7 +2289,7 @@
                                     History</p>
                             </div>
                         </div>
-                        <div class="heading-mask heading-mask__now js-no-mask-section">
+                        <div class="heading-mask heading-mask__now">
                             <div class="heading-mask_el container_content heading-mask_el__deep">
                                 <div class="row">
                                     <div class="col-sm-2 offset-lg-2 offset-sm-1 col-3">
@@ -1722,7 +2343,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
                                             <div class="simple-masking overflow-hidden">
-                                                <h2 class="h1 mb-0 none-break">Music Player</h2>
+                                                <h2 class="h1 mb-0 none-break"><a href="https://github.com/GHrushikesh/Code-Atlas" target="_blank" rel="noopener noreferrer" class="project_anchor_link">Code Atlas</a></h2>
                                             </div>
                                         </div>
                                     </div>
@@ -1731,7 +2352,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
                                             <div class="simple-masking overflow-hidden">
-                                                <h2 class="h1 mb-0 none-break text-dark">Music Player</h2>
+                                                <h2 class="h1 mb-0 none-break text-dark"><a href="https://github.com/GHrushikesh/Code-Atlas" target="_blank" rel="noopener noreferrer" class="project_anchor_link">Code Atlas</a></h2>
                                             </div>
                                         </div>
                                     </div>
@@ -1742,7 +2363,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
                                             <div class="simple-masking overflow-hidden">
-                                                <h2 class="h1 mb-0">Business Management System</h2>
+                                                <h2 class="h1 mb-0"><a href="https://github.com/GHrushikesh/Ujjam-Computer-" target="_blank" rel="noopener noreferrer" class="project_anchor_link">ProShop Inventory & WhatsApp Automation</a></h2>
                                             </div>
                                         </div>
                                     </div>
@@ -1751,7 +2372,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
                                             <div class="simple-masking overflow-hidden">
-                                                <h2 class="h1 mb-0 text-dark">Business Management System</h2>
+                                                <h2 class="h1 mb-0 text-dark"><a href="https://github.com/GHrushikesh/Ujjam-Computer-" target="_blank" rel="noopener noreferrer" class="project_anchor_link">ProShop Inventory & WhatsApp Automation</a></h2>
                                             </div>
                                         </div>
                                     </div>
@@ -1762,7 +2383,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-sm-6 offset-lg-2 offset-sm-1 col-12 d-sm-block d-none">
                                             <div class="simple-masking overflow-hidden">
-                                                <h2 class="h1 mb-0 op-05">Working on idea...</h2>
+                                                <h2 class="h1 mb-0 op-05"><a href="https://github.com/GHrushikesh?tab=repositories" target="_blank" rel="noopener noreferrer" class="project_anchor_link">Working on idea...</a></h2>
                                             </div>
                                         </div>
                                     </div>
@@ -1776,8 +2397,7 @@
                             <div class="dots container_content"><span></span> <span></span> <span></span></div>
                         </div>
                     </div>
-                    <div id="certificates_red" class="testimonials testimonials__red"
-                        style="padding: 100px 0;">
+                    <div id="certificates_red" class="testimonials testimonials__red" style="padding: 100px 0;">
                         <div class="row">
                             <div class="col-lg-8 col-sm-10 col-12 offset-lg-2 offset-sm-1">
                                 <div class="d-flex justify-content-between align-items-end mb-5">
@@ -1795,10 +2415,11 @@
                                             onmouseout="this.style.background='transparent'; this.style.color='#222';">&#8594;</button>
                                     </div>
                                 </div>
-                                <div class="certificates_scroll_container js-no-mask-section">
+                                <div class="certificates_scroll_container">
                                     <!-- CCNA: Switching, Routing, and Wireless Essentials -->
                                     <div class="certificate_item">
-                                        <img src="assets/certificate/ccna_switching.png" alt="CCNA: Switching, Routing, and Wireless Essentials">
+                                        <img src="assets/certificate/ccna_switching.png"
+                                            alt="CCNA: Switching, Routing, and Wireless Essentials">
                                         <div class="certificate_item_body">
                                             <h3 class="h6 mb-1">CCNA: Switching, Routing, and Wireless Essentials</h3>
                                             <p class="desc op-05 small">Cisco Networking Academy</p>
@@ -1814,7 +2435,8 @@
                                     </div>
                                     <!-- CCNA: Introduction to Networks -->
                                     <div class="certificate_item">
-                                        <img src="assets/certificate/ccna_intro.png" alt="CCNA: Introduction to Networks">
+                                        <img src="assets/certificate/ccna_intro.png"
+                                            alt="CCNA: Introduction to Networks">
                                         <div class="certificate_item_body">
                                             <h3 class="h6 mb-1">CCNA: Introduction to Networks</h3>
                                             <p class="desc op-05 small">Cisco Networking Academy</p>
@@ -1822,7 +2444,8 @@
                                     </div>
                                     <!-- Problem Solving for Success -->
                                     <div class="certificate_item">
-                                        <img src="assets/certificate/infosys_problem_solving.png" alt="Problem Solving for Success">
+                                        <img src="assets/certificate/infosys_problem_solving.png"
+                                            alt="Problem Solving for Success">
                                         <div class="certificate_item_body">
                                             <h3 class="h6 mb-1">Problem Solving for Success</h3>
                                             <p class="desc op-05 small">Infosys Springboard</p>
@@ -1832,18 +2455,102 @@
                             </div>
                         </div>
                     </div>
+                    <div id="contact_red" class="contact_red">
+                        <div class="motto motto__red">
+                            <div class="motto_content container_content">
+                                <div class="row justify-content-center align-items-center">
+                                    <div class="col-lg-8 col-12 motto_content_inner">
+                                        <div>
+                                            <p class="text-center mb-0 h6">MY MOTTO</p>
+                                            <p class="text-center motto_content_heading h1 mb-0">Code.<br
+                                                    class="d-lg-none d-inline-block">Create.<br>Improve.</p>
+                                            <p class="desc text-center mb-0">Hrushikesh Gangajadiya</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact contact__red container_content" style="padding-bottom: 4rem;">
+                            <div class="row">
+                                <div class="col-lg-8 col-sm-10 col-12 offset-lg-2 offset-sm-1">
+                                    <p class="contact_label body-text text-uppercase text-dark">Connect</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 col-sm-5 offset-lg-2 offset-sm-1 col-12">
+                                    <ul class="ul__reset">
+                                        <li class="social-link h3 mb-4">
+                                            <div><a
+                                                    href="https://www.linkedin.com/in/hrushikesh-gangajadiya?utm_source=share_via&utm_content=profile&utm_medium=member_android"
+                                                    class="contact_link" target="_blank">Let's connect</a></div>
+                                        </li>
+                                        <li class="social-link h3 mb-4">
+                                            <div><a href="https://github.com/GHrushikesh" class="contact_link"
+                                                    target="_blank">Check my repos</a></div>
+                                        </li>
+                                        <li class="social-link h3 mb-4">
+                                            <div><a href="https://leetcode.com/u/Hrushikesh_2804/" class="contact_link"
+                                                    target="_blank">Check my solutions</a></div>
+                                        </li>
+                                        <li class="social-link h3 mb-4">
+                                            <div><a href="Hrushikesh_Gangajadiya.pdf" class="contact_link"
+                                                    target="_blank" rel="noopener noreferrer">Resume (PDF)</a></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-3 col-12 contact_content">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-5 offset-lg-0 offset-sm-1 col-12">
+                                            <div class="contact_info contact_info__top mb-4">
+                                                <div>
+                                                    <span class="h4 d-block mb-1">100% chance I read it</span>
+                                                    <a class="sub-content"
+                                                        href="mailto:hgangajadiya@gmail.com">hgangajadiya@gmail.com</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-5 col-12">
+                                            <div class="contact_info">
+                                                <div>
+                                                    <span class="h4 d-block mb-1">Social</span>
+                                                    <a class="sub-content"
+                                                        href="https://github.com/GHrushikesh">@hrushikesh</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-5 col-12" style="margin-top: 1rem;">
+                                            <div class="contact_info">
+                                                <div>
+                                                    <span class="h4 d-block mb-1 text-dark">Resume / CV</span>
+                                                    <div class="resume_button_group">
+                                                        <a href="Hrushikesh_Gangajadiya.pdf" target="_blank" rel="noopener noreferrer" class="resume_btn resume_btn__view resume_btn__red">View PDF ↗</a>
+                                                        <a href="Hrushikesh_Gangajadiya.pdf" download="Hrushikesh_Gangajadiya.pdf" class="resume_btn resume_btn__download resume_btn__red">Download ⤓</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
     </main>
     <footer id="js-footer" class="footer">
         <ul class="footer_socials ul__reset">
+            <li class="social js-social"><a class="social_link social_link__leetcode"
+                    href="https://leetcode.com/u/Hrushikesh_2804/" target="_blank"
+                    aria-label="Visit my LeetCode profile"><img src="assets/icons/ic-leetcode.svg?v=2" class="svg"
+                        alt="LeetCode icon"></a></li>
             <li class="social js-social"><a class="social_link social_link__linkedin"
                     href="https://www.linkedin.com/in/hrushikesh-gangajadiya?utm_source=share_via&utm_content=profile&utm_medium=member_android"
                     target="_blank" aria-label="Visit my LinkedIn profile"><img src="assets/icons/ic-in.svg" class="svg"
                         alt="LinkedIn icon"></a></li>
             <li class="social js-social"><a class="social_link social_link__github"
                     href="https://github.com/GHrushikesh" target="_blank" aria-label="Visit my GitHub profile"><img
-                        src="assets/icons/ic-github.svg" class="svg" alt="GitHub icon" style="filter: invert(1);"></a>
+                        src="assets/icons/ic-github.svg" class="svg" alt="GitHub icon"></a>
             </li>
         </ul>
     </footer>
@@ -1870,39 +2577,16 @@
             // Dispatch resize to align GSAP triggers and 3D scenes
             window.dispatchEvent(new Event('resize'));
 
-            // Mask Effect (Mouse/Pointer only)
-            const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-            const redLayer = document.querySelector('.layer__red');
-            if (!isTouchDevice && redLayer) {
-                document.addEventListener('mousemove', function (e) {
-                    document.documentElement.style.setProperty('--x', e.pageX + 'px');
-                    document.documentElement.style.setProperty('--y', e.pageY + 'px');
 
-                    const target = document.elementFromPoint(e.clientX, e.clientY);
-                    if (target && target.closest('.js-no-mask-section')) {
-                        document.documentElement.style.setProperty('--size', '0px');
-                    }
-                });
-
-                const maskTargets = document.querySelectorAll('.js-heading-mask, .js-cursor-extend, .js-cursor-contract, a, button');
-                maskTargets.forEach(target => {
-                    target.addEventListener('mouseenter', () => {
-                        if (target.closest('.js-no-mask-section')) {
-                            document.documentElement.style.setProperty('--size', '0px');
-                        } else {
-                            document.documentElement.style.setProperty('--size', '300px');
-                        }
-                    });
-                    target.addEventListener('mouseleave', () => {
-                        document.documentElement.style.setProperty('--size', '0px');
-                    });
-                });
-            }
         }
 
-        // Automatic unlock fallback
-        setTimeout(unlockScroll, 2000);
+        // Automatic unlock fallback & fast responsive loading
+        window.addEventListener('load', function () {
+            setTimeout(unlockScroll, 350);
+        });
+        setTimeout(unlockScroll, 1600);
         document.addEventListener('mousedown', unlockScroll, { once: true });
+        document.addEventListener('touchstart', unlockScroll, { once: true, passive: true });
 
         // Certificates Slider Logic
         const certContainers = document.querySelectorAll('.certificates_scroll_container');
@@ -1940,14 +2624,14 @@
         const headerMenu = document.getElementById('js-header_menu');
 
         if (headerToggle && headerMenu) {
-            headerToggle.addEventListener('click', function(e) {
+            headerToggle.addEventListener('click', function (e) {
                 e.stopPropagation();
                 const isOpen = headerMenu.classList.toggle('is-open');
                 headerToggle.classList.toggle('is-active', isOpen);
                 headerToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
             });
 
-            document.addEventListener('click', function(e) {
+            document.addEventListener('click', function (e) {
                 if (!headerMenu.contains(e.target) && !headerToggle.contains(e.target) && headerMenu.classList.contains('is-open')) {
                     headerMenu.classList.remove('is-open');
                     headerToggle.classList.remove('is-active');
@@ -1994,79 +2678,7 @@
             revealObserver.observe(el);
         });
 
-        // 2. Web Particle System
-        const canvas = document.getElementById('web-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let mouse = { x: null, y: null };
-
-        function initParticles() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            particles = [];
-            for (let i = 0; i < 40; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
-                    size: Math.random() * 1 + 0.5
-                });
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-            ctx.strokeStyle = isLight ? 'rgba(216, 0, 16, 0.16)' : 'rgba(230, 0, 18, 0.22)';
-            ctx.lineWidth = 0.5;
-
-            particles.forEach((p, i) => {
-                p.x += p.vx;
-                p.y += p.vy;
-                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-                if (mouse.x !== null) {
-                    const dx = p.x - mouse.x;
-                    const dy = p.y - mouse.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 100) {
-                        const force = (100 - dist) / 100;
-                        p.x += (dx / dist) * force * 1.2;
-                        p.y += (dy / dist) * force * 1.2;
-                    }
-                }
-
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fillStyle = isLight ? 'rgba(216, 0, 16, 0.35)' : 'rgba(255, 255, 255, 0.35)';
-                ctx.fill();
-
-                for (let j = i + 1; j < particles.length; j++) {
-                    const p2 = particles[j];
-                    const dist = Math.sqrt((p.x - p2.x) ** 2 + (p.y - p2.y) ** 2);
-                    if (dist < 140) {
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                }
-            });
-            requestAnimationFrame(animateParticles);
-        }
-
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-
-        initParticles();
-        animateParticles();
-        window.addEventListener('resize', initParticles);
-
-        // 3. Theme Toggle Interaction
+        // Theme Toggle Interaction
         const themeBtn = document.getElementById('js-theme_toggle');
         if (themeBtn) {
             themeBtn.addEventListener('click', () => {
@@ -2075,7 +2687,8 @@
                 document.documentElement.setAttribute('data-theme', newTheme);
                 try {
                     localStorage.setItem('portfolio_theme', newTheme);
-                } catch(e) {}
+                } catch (e) { }
+                window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: newTheme } }));
             });
         }
     </script>

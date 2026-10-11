@@ -1,2 +1,7 @@
+# OS files
 .DS_Store
 Thumbs.db
+
+# Agent skills & internal tooling
+.agent/
+get-shit-done-antigravity/

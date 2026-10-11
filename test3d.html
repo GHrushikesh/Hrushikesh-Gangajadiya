@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>3D Model Diagnostic</title>
+<style>
+body { background: #111; color: #fff; font-family: monospace; padding: 20px; margin: 0; }
+canvas { border: 2px solid #e60012; display: block; }
+#log { background: #000; padding: 10px; max-height: 300px; overflow-y: auto; margin-top: 10px; font-size: 12px; }
+.ok { color: #00ff88; }
+.err { color: #ff4444; }
+.info { color: #88ccff; }
+#scenes { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
+.scene-box { background: #1a1a1a; padding: 10px; border-radius: 8px; }
+</style>
+</head>
+<body>
+<h2>🕷️ Spider Portfolio 3D Diagnostic</h2>
+<div id="log"></div>
+<div id="scenes">
+  <div class="scene-box">
+    <p>Web.glb</p>
+    <div id="web-host" style="width:300px;height:300px;position:relative;"></div>
+  </div>
+  <div class="scene-box">
+    <p>Spider.glb</p>
+    <div id="spider-host" style="width:300px;height:300px;position:relative;"></div>
+  </div>
+  <div class="scene-box">
+    <p>Shooter.glb</p>
+    <div id="shooter-host" style="width:300px;height:300px;position:relative;"></div>
+  </div>
+</div>
+
+<script src="assets/js/three.min.js?v=r128"></script>
+<script src="assets/js/meshopt_decoder.js?v=fixed1"></script>
+<script src="assets/js/GLTFLoader.js?v=r128"></script>
+<script>
+var log = document.getElementById('log');
+function out(msg, cls) {
+  var d = document.createElement('div');
+  d.className = cls || 'info';
+  d.textContent = new Date().toLocaleTimeString() + ' — ' + msg;
+  log.appendChild(d);
+  log.scrollTop = log.scrollHeight;
+  console.log(msg);
+}
+
+out('Checking THREE... ' + (typeof THREE !== 'undefined' ? 'OK ✓' : 'MISSING ✗'), typeof THREE !== 'undefined' ? 'ok' : 'err');
+out('Checking THREE.GLTFLoader... ' + (typeof THREE !== 'undefined' && typeof THREE.GLTFLoader !== 'undefined' ? 'OK ✓' : 'MISSING ✗'), typeof THREE !== 'undefined' && typeof THREE.GLTFLoader !== 'undefined' ? 'ok' : 'err');
+out('Checking MeshoptDecoder... ' + (typeof MeshoptDecoder !== 'undefined' ? 'OK ✓' : 'MISSING ✗'), typeof MeshoptDecoder !== 'undefined' ? 'ok' : 'err');
+
+if (typeof THREE !== 'undefined' && typeof THREE.GLTFLoader !== 'undefined' && typeof MeshoptDecoder !== 'undefined') {
+  MeshoptDecoder.ready.then(function() {
+    out('MeshoptDecoder.ready resolved ✓', 'ok');
+
+    var loader = new THREE.GLTFLoader();
+    loader.setMeshoptDecoder(MeshoptDecoder);
+
+    function makePreview(hostId, url) {
+      var host = document.getElementById(hostId);
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+      camera.position.z = 5;
+      var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setSize(300, 300);
+      renderer.outputEncoding = THREE.sRGBEncoding;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.3;
+      renderer.domElement.style.cssText = 'display:block;width:100%;height:100%;';
+      host.appendChild(renderer.domElement);
+
+      scene.add(new THREE.AmbientLight(0xffffff, 1.5));
+      var d = new THREE.DirectionalLight(0xe60012, 3.0);
+      d.position.set(3, 4, 3); scene.add(d);
+      var d2 = new THREE.DirectionalLight(0x00d4ff, 2.0);
+      d2.position.set(-3, 2, -2); scene.add(d2);
+
+      out('Loading: ' + url + '...', 'info');
+      loader.load(url, function(gltf) {
+        out('Loaded: ' + url + ' ✓', 'ok');
+        var model = gltf.scene;
+        var box = new THREE.Box3().setFromObject(model);
+        var center = box.getCenter(new THREE.Vector3());
+        var size = box.getSize(new THREE.Vector3());
+        var maxDim = Math.max(size.x, size.y, size.z) || 1;
+        var sc = 3.0 / maxDim;
+        model.scale.setScalar(sc);
+        model.position.set(-center.x * sc, -center.y * sc, -center.z * sc);
+        scene.add(model);
+        out('  Size: ' + size.x.toFixed(2) + ' x ' + size.y.toFixed(2) + ' x ' + size.z.toFixed(2), 'info');
+
+        var clock = new THREE.Clock();
+        (function tick() {
+          requestAnimationFrame(tick);
+          model.rotation.y += 0.008;
+          renderer.render(scene, camera);
+        })();
+      }, function(progress) {
+        if (progress.total > 0) out('  Loading... ' + Math.round(progress.loaded/progress.total*100) + '%', 'info');
+      }, function(err) {
+        out('ERROR loading ' + url + ': ' + err.message, 'err');
+      });
+    }
+
+    makePreview('web-host', 'assets/glb/web.glb');
+    makePreview('spider-host', 'assets/glb/spider.glb');
+    makePreview('shooter-host', 'assets/glb/shooter.glb');
+
+  }).catch(function(e) {
+    out('MeshoptDecoder.ready FAILED: ' + e, 'err');
+  });
+} else {
+  out('Cannot proceed — missing dependencies', 'err');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <!-- White Top-Left Angle Bracket -->
+  <path d="M8.8 3.8a1.4 1.4 0 0 0-1.98 0L2.1 8.52a5.2 5.2 0 0 0 0 7.35l4.1 4.1a1.4 1.4 0 1 0 1.98-1.98L4.62 14.43a2.4 2.4 0 0 1 0-3.39l4.18-4.18a1.4 1.4 0 0 0 0-1.98z" fill="#FFFFFF"/>
+  <!-- Orange Right Loop & Accent -->
+  <path d="M14.5 4.8a1.4 1.4 0 0 0-1.98 1.98l2.2 2.2a1.4 1.4 0 1 0 1.98-1.98l-2.2-2.2zM12.4 16.5a1.4 1.4 0 0 0 1.98 1.98l4.1-4.1a5.2 5.2 0 0 0 0-7.35l-1.3-1.3a1.4 1.4 0 1 0-1.98 1.98l1.3 1.3a2.4 2.4 0 0 1 0 3.39l-4.1 4.1z" fill="#FFA116"/>
+  <!-- Center Horizontal Dash -->
+  <path d="M9 11h9a1.2 1.2 0 0 1 0 2.4H9a1.2 1.2 0 0 1 0-2.4z" fill="#909090"/>
+</svg>

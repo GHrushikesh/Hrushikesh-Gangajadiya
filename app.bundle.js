@@ -2932,7 +2932,7 @@
                         }, {
                             key: "pageLoaded",
                             value: function() {
-                                cancelAnimationFrame(this.idAnimationLoop), document.body.classList.add("is-loaded"), document.body.classList.remove("is-loading"), document.body.classList.remove("is-simple"), D.emit(g), D.emit("PAGE_LOADED_ONE"), this.clear(), this.isSimpleLoader ? this.startIn() : (this.hide(), D.emit("PAGE_ENTER_INTRO"), new Ne((function() {
+                                cancelAnimationFrame(this.idAnimationLoop), document.body.classList.add("is-loaded"), document.body.classList.remove("is-loading"), document.body.classList.remove("is-simple"), rt.lenis.start(), D.emit(g), D.emit("PAGE_LOADED_ONE"), this.clear(), this.isSimpleLoader ? this.startIn() : (this.hide(), D.emit("PAGE_ENTER_INTRO"), new Ne((function() {
                                     D.emit(w), D.emit(v)
                                 }), this.timeOutTriggerPageEnter))
                             }
@@ -3969,13 +3969,7 @@
                             mouseScroller: new ii.Pa4(-.05, -.05, .01)
                         };
                         var n = this.DOM.main.querySelector(".js-about_ido_coffee");
-                        n && (this.obCoffee = new Ti({
-                            el: n,
-                            url: "assets/glb/spider_tech.gltf",
-                            scale: 0.55,
-                            scroller: this.state.coffeeScroller,
-                            rotation: new ii.USm(this.state.coffeeRotation.x, this.state.coffeeRotation.y, this.state.coffeeRotation.z, "XYZ")
-                        }));
+                        n && (this.obCoffee = null);
                         var r = this.DOM.main.querySelector(".js-about_ido_mouse");
                         r && (this.obMouse = null), vi.addObjects(this.render.bind(this))
                     }
@@ -4239,9 +4233,6 @@
                                     main: n
                                 });
                                 var r = document.querySelector(".js-client_list_3d");
-                                r && new Yi({
-                                    el: r
-                                })
                             }
                         }
                     }, {
